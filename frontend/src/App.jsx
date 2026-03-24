@@ -156,7 +156,55 @@ function App() {
               )}
             </div>
           )}
+{result.ai_analysis && (
+  <div style={{ border: '1px solid #e5e7eb', borderRadius: '8px', padding: '20px' }}>
+    <div style={{ fontSize: '15px', fontWeight: 'bold', marginBottom: '16px' }}>
+      Pre-Application Analysis
+    </div>
 
+    <div style={{ marginBottom: '16px' }}>
+      <div style={{ fontSize: '13px', color: '#666', marginBottom: '4px' }}>Summary</div>
+      <div style={{ fontSize: '15px' }}>{result.ai_analysis.summary}</div>
+    </div>
+
+    <div style={{ marginBottom: '16px' }}>
+      <div style={{ fontSize: '13px', color: '#666', marginBottom: '4px' }}>Approval Path</div>
+      <div style={{ fontSize: '14px' }}>{result.ai_analysis.approval_path}</div>
+    </div>
+
+    {result.ai_analysis.key_considerations?.length > 0 && (
+      <div style={{ marginBottom: '16px' }}>
+        <div style={{ fontSize: '13px', color: '#666', marginBottom: '4px' }}>Key Considerations</div>
+        <ul style={{ margin: 0, paddingLeft: '20px', fontSize: '14px', lineHeight: '1.8' }}>
+          {result.ai_analysis.key_considerations.map((c, i) => <li key={i}>{c}</li>)}
+        </ul>
+      </div>
+    )}
+
+    {result.ai_analysis.red_flags?.length > 0 && (
+      <div style={{ marginBottom: '16px', padding: '12px', background: '#fff7ed', border: '1px solid #fed7aa', borderRadius: '4px' }}>
+        <div style={{ fontSize: '13px', fontWeight: 'bold', color: '#9a3412', marginBottom: '6px' }}>⚠ Red Flags</div>
+        <ul style={{ margin: 0, paddingLeft: '20px', fontSize: '14px', lineHeight: '1.8', color: '#9a3412' }}>
+          {result.ai_analysis.red_flags.map((f, i) => <li key={i}>{f}</li>)}
+        </ul>
+      </div>
+    )}
+
+    <div style={{ marginBottom: '16px' }}>
+      <div style={{ fontSize: '13px', color: '#666', marginBottom: '4px' }}>Likely Staff Position</div>
+      <div style={{ fontSize: '14px', fontStyle: 'italic' }}>{result.ai_analysis.likely_staff_position}</div>
+    </div>
+
+    {result.ai_analysis.next_steps?.length > 0 && (
+      <div>
+        <div style={{ fontSize: '13px', color: '#666', marginBottom: '4px' }}>Next Steps</div>
+        <ol style={{ margin: 0, paddingLeft: '20px', fontSize: '14px', lineHeight: '1.8' }}>
+          {result.ai_analysis.next_steps.map((s, i) => <li key={i}>{s}</li>)}
+        </ol>
+      </div>
+    )}
+  </div>
+)}
           {/* Disclaimer */}
           <div style={{ padding: '12px', background: '#f0fdf4', border: '1px solid #86efac', borderRadius: '4px', fontSize: '13px', color: '#166534' }}>
             ✓ Results appear subject to staff review and do not constitute zoning approval or compliance determination. Verify all information with Garland Planning staff before submitting permit applications.
