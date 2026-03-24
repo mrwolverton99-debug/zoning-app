@@ -18,6 +18,7 @@ def get_session():
 
 ADDRESS_URL = "https://maps.garlandtx.gov/arcgis/rest/services/Planning/GarlandZoningWebmap/MapServer/3/query"
 ZONING_URL = "https://maps.garlandtx.gov/arcgis/rest/services/Planning/GarlandZoningWebmap/MapServer/0/query"
+FLUM_URL = "https://maps.garlandtx.gov/arcgis/rest/services/Planning/GarlandZoningWebmap/MapServer/1/query"
 
 def get_parcel_zoning(address: str):
     s = get_session()
@@ -59,6 +60,25 @@ def get_parcel_zoning(address: str):
     base_zone = z.get("BASE_ZONE") or ""
     is_pd = "PD" in base_zone.upper()
 
+    # Step 3: coordinates to FLUM
+    flum_params = {
+        "geometry": f"{lng},{lat}",
+        "geometryType": "esriGeometryPoint",
+        "inSR": "4326",
+        "spatialRel": "esriSpatialRelIntersects",
+        "outFields": "SUB_CATEGO,CATEGORY",
+        "returnGeometry": "false",
+        "f": "json"
+    }
+    flum_resp = s.get(FLUM_URL, params=flum_params)
+    flum_data = flum_resp.json()
+    flum_features = flum_data.get("features", [])
+    flum_designation = None
+    flum_category = None
+    if flum_features:
+        flum_designation = flum_features[0]["attributes"].get("SUB_CATEGO")
+        flum_category = flum_features[0]["attributes"].get("CATEGORY")
+
     return {
         "base_zone": base_zone,
         "gdc_zoning": z.get("GDC_ZONING"),
@@ -67,4 +87,6 @@ def get_parcel_zoning(address: str):
         "lng": lng,
         "is_planned_development": is_pd,
         "requires_manual_review": is_pd,
+        "flum_designation": flum_designation,
+        "flum_category": flum_category,
     }

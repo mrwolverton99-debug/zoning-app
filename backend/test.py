@@ -19,13 +19,13 @@ params = {
     "geometryType": "esriGeometryPoint",
     "inSR": "4326",
     "spatialRel": "esriSpatialRelIntersects",
-    "outFields": "BASE_ZONE,GDC_ZONING,PD_NUM,BASEZONING",
+    "outFields": "*",
     "returnGeometry": "false",
     "f": "json"
 }
 
 r = s.get(
-    "https://maps.garlandtx.gov/arcgis/rest/services/Planning/GarlandZoningWebmap/MapServer/0/query",
+    "https://maps.garlandtx.gov/arcgis/rest/services/Planning/GarlandZoningWebmap/MapServer/1/query",
     params=params
 )
 print(r.json())
