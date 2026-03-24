@@ -156,6 +156,13 @@ NONCONFORMING USES:
 - Destroyed 60% or less = Building Official may permit reconstruction
 - Once changed to conforming use = cannot change back to nonconforming
 
+EXISTING SUPs ON PARCELS:
+When a parcel shows an existing SUP designation (e.g., "S 25-40"), a Specific Use Provision has already been approved somewhere on that property — typically for a specific suite and use within a larger commercial building. Key points:
+- SUPs are appurtenant to the land, not the tenant — a new tenant for the same use in the same suite may be covered under the existing SUP, but must verify with Planning staff
+- A different suite or a different use type requires a new SUP application
+- Some uses may be legally nonconforming — operating without an SUP that is now required under the current GDC. These can continue but cannot expand and lapse after 6 months of abandonment
+- Always flag existing SUPs and recommend the applicant verify the specific suite and use scope with Garland Planning staff before assuming coverage
+
 ---
 
 DOWNTOWN AUTOMOTIVE OVERLAY (DAO):
@@ -233,6 +240,7 @@ PROPERTY INFORMATION:
 - Zoning District: {district}
 - Is Planned Development: {zoning_data.get('is_planned_development', False)}
 - Future Land Use Map Designation: {zoning_data.get('flum_designation', 'Unknown')} ({zoning_data.get('flum_category', '')})
+- Existing SUP on Parcel: {zoning_data.get('existing_sup_num') or 'None'}
 
 PROPOSED USE (plain language description from applicant):
 {proposed_use}

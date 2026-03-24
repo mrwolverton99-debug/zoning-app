@@ -79,10 +79,17 @@ def get_parcel_zoning(address: str):
         flum_designation = flum_features[0]["attributes"].get("SUB_CATEGO")
         flum_category = flum_features[0]["attributes"].get("CATEGORY")
 
+    gdc_zoning = z.get("GDC_ZONING") or ""
+    pd_num = z.get("PD_NUM", "").strip() or None
+    has_existing_sup = gdc_zoning.startswith("S ") and not is_pd
+    existing_sup_num = gdc_zoning if has_existing_sup else None
+
     return {
         "base_zone": base_zone,
-        "gdc_zoning": z.get("GDC_ZONING"),
-        "pd_num": z.get("PD_NUM", "").strip() or None,
+        "gdc_zoning": gdc_zoning,
+        "pd_num": pd_num,
+        "has_existing_sup": has_existing_sup,
+        "existing_sup_num": existing_sup_num,
         "lat": lat,
         "lng": lng,
         "is_planned_development": is_pd,
