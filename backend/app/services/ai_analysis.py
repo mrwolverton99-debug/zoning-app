@@ -25,7 +25,7 @@ GARLAND DEVELOPMENT CODE — DISTRICT PURPOSES
 
 AG: Intended for vacant land not yet ready for development, agricultural/open space uses, floodplain areas, and newly annexed land. Single-family uses on large lots are appropriate.
 
-SF-E, SF-10, SF-7, SF-5: Intended to provide for development of primarily low-density detached, single-family residences on a variety of lot sizes, churches, schools, and public parks in logical, livable, and sustainable neighborhoods.
+SF-E, SF-10, SF-7, SF-5: Intended for primarily low-density detached, single-family residences on a variety of lot sizes, churches, schools, and public parks in logical, livable, and sustainable neighborhoods.
 
 SFA: Intended for stable, quality, attached-occupancy residential development. May serve as a transition district between lower density residential and multifamily or nonresidential areas.
 
@@ -49,6 +49,8 @@ UR: Predominantly residentially-oriented mixed-use. Limited integrated nonreside
 
 UB: Predominantly business/shopping-oriented. May include integrated residential uses.
 
+DT (Downtown): Has five sub-districts: Downtown Historic (DH), Downtown Square (DS), Uptown (UP), InTown Residential (IR), and Suburban Corridor (SC). Downtown is generally permissive — restaurant, retail store, office, multifamily, live-work, and most commercial uses are permitted by right in most DT sub-districts. Breweries/wineries/distilleries require SUP in all DT sub-districts. Restaurant is permitted by right in all five DT sub-districts.
+
 ---
 
 DIMENSIONAL STANDARDS:
@@ -69,7 +71,57 @@ NONRESIDENTIAL ADJACENCY: All nonresidential buildings must maintain 20' side/re
 
 NONRESIDENTIAL USES IN RESIDENTIAL DISTRICTS: Allowed nonresidential uses in residential districts (schools, churches, day cares) must meet NS district development requirements.
 
-PD DEVIATIONS: When applicants request deviations from GDC standards through a Planned Development, staff evaluates each deviation individually against the purpose and intent of the base zoning district. Common deviations include reduced lot size, increased lot coverage, reduced setbacks, and reduced lot width. Staff will note each deviation and whether it is supportable.
+PD DEVIATIONS: When applicants request deviations from GDC standards through a Planned Development, staff evaluates each deviation individually. Common deviations include reduced lot size, increased lot coverage, reduced setbacks, reduced lot width. Each must be justified by site-specific conditions.
+
+---
+
+ACCESSORY BUILDINGS (§2.58):
+- Must meet same front yard setbacks as main building
+- Cannot be used for habitation unless approved as Accessory Dwelling per §2.51
+- Requires main building on same lot
+- Cannot be sold separately from the property
+- Requires building permit if over 20sf
+- Total floor area of all accessory buildings cannot exceed 30% of main building floor area (but never limited to less than 600sf)
+- Over 200sf: max height 15', max wall height 10.5'
+- Over 500sf: max height 25' or height of main structure (whichever less), max wall height 12.5'
+- In rear yard: minimum 3' side and rear setback required
+
+CARPORTS — RESIDENTIAL (§2.59):
+- No metal carports in front of single-family residence or in side yard adjacent to street
+- Metal carports allowed at rear only, accessed from paved alley
+- Rear yard carport height: limited to peak of roof or 15' (whichever greater) for one-story; 15' max for two-story
+- Cannot be enclosed or converted to garage, living space, storage, or workroom
+- Siding may extend max 2' down from roof on open sides
+
+CARPORTS — NONRESIDENTIAL (§2.60):
+- Cannot encroach into required front, side, or rear yard setbacks
+- Cannot extend over public street or City easement
+- Minimum 14' clearance over fire lanes or vehicular drive aisles
+- Columns must be architecturally integrated and match main building colors
+- Maximum 10 parking stalls under each roof structure
+- Must be at least 18' (post-to-post) from another parking structure without a landscaped island and large canopy tree between
+
+HOME OCCUPATIONS (§2.61):
+- Home-based businesses are prohibited unless operating as a "no-impact home-based business"
+- No-impact criteria: does not exceed occupancy limit, no on-street parking or substantial traffic increase, activities not visible from street, does not substantially increase noise
+- PROHIBITED: vehicle sales, vehicle repairs (major auto repair prohibited if visible from ROW; any auto repair prohibited if vehicle not registered to property owner), wrecker services, alcohol/drug sales, contracting/construction services with equipment/materials visible from ROW
+
+---
+
+LANDSCAPING COMPLIANCE TRIGGERS (§4.29):
+Full compliance required when:
+- New construction on undeveloped site
+- Demolition and reconstruction of 50%+ of existing building
+- Conversion of residential to nonresidential
+- Building footprint expansion of 30%+ (20%+ if site is 100,000sf+)
+- Parking lot expansion by more than 50% of original size
+
+Partial compliance (new/altered area only):
+- Parking lot expansion by 50% or less
+- Increasing/altering loading area, outside storage, refuse containers, ground/wall-mounted equipment
+- New parking area with street frontage
+
+Exemptions: Downtown Form-Based Code properties, PD districts with approved screening/landscaping, historic structures, temporary job trailers.
 
 ---
 
@@ -88,11 +140,11 @@ The 7 SUP Criteria:
 6. Incorporates features to minimize adverse effects including visual impacts on adjacent properties
 7. Meets development standards of the zoning district
 
-SUP TIME PERIOD: The SUP Time Period Guideline suggests 5-8 years for uses not proposing any site improvements. Applicants sometimes request longer periods to match lease length — staff evaluates against the guideline.
+SUP TIME PERIOD: Guideline suggests 5-8 years for uses not proposing any site improvements. Applicants sometimes request longer periods to match lease length — staff evaluates against the guideline.
 
-SUP CONDITIONS staff commonly attaches: building size/height limits, open space, impervious surface limits, enhanced parking/loading, landscaping/screening, building placement/orientation, buffer yards, signage restrictions, hours of operation, time-limited SUP, limitation on number of uses within a PD.
+SUP CONDITIONS commonly attached: building size/height limits, open space, impervious surface limits, enhanced parking/loading, landscaping/screening, buffer yards, signage restrictions, hours of operation, time-limited SUP.
 
-PROXIMITY ANALYSIS: For SUP uses, staff evaluates proximity to similar uses in the area. If multiple similar uses already exist within 1 mile, staff notes that the need for the service may already be satisfied. This is relevant for laundromats, convenience stores, restaurants, and similar uses.
+PROXIMITY ANALYSIS: For SUP uses, staff evaluates proximity to similar uses in the area. If multiple similar uses already exist within 1 mile, staff notes that the need for the service may already be satisfied.
 
 ---
 
@@ -106,43 +158,50 @@ NONCONFORMING USES:
 
 ---
 
+DOWNTOWN AUTOMOTIVE OVERLAY (DAO):
+The DAO overlaps with but is not identical to the Downtown district boundary. Within the DAO, new automotive uses (auto repair, auto sales, car wash, wrecker, etc.) may not operate unless they obtain transferable land use credits from another automotive use that is closing within the DAO. Credits expire 60 days after a use ceases business. No new DAO site may exceed 10,000sf. This means a DT-zoned property inside the DAO could potentially accommodate automotive uses through credit transfer even though they are not listed in the DT land use matrix.
+
+---
+
 ENVISION GARLAND 2030 — FUTURE LAND USE MAP CATEGORIES:
 
-Staff always evaluates Comprehensive Plan consistency. The FLUM designation is a key factor in every staff recommendation.
+Staff always evaluates Comprehensive Plan consistency. The FLUM is a guide — it does not define zoning district boundaries, but is a key factor in every staff recommendation.
 
-Traditional Neighborhoods: Low to moderate density SF detached residential. Convenience retail, office, public services compatible at local/secondary arterial intersections. Dev intensity: 1-6 du/acre; non-residential sites up to 3 acres.
+Traditional Neighborhoods: Low to moderate density SF detached. Convenience retail, office, public services compatible at local/secondary arterial intersections. Dev intensity: 1-6 du/acre; non-residential sites up to 3 acres.
 
-Compact Neighborhoods: Moderate density SF attached and detached. Transitions between traditional residential and higher density/non-residential. Convenience retail, office, public services compatible if architecturally compatible. Dev intensity: 6-12 du/acre; non-residential up to 3 acres.
+Compact Neighborhoods: Moderate density SF attached and detached. Convenience retail, office, public services compatible if architecturally compatible with adjacent residential. Dev intensity: 6-12 du/acre; non-residential up to 3 acres.
 
 Urban Neighborhoods: Higher density residential, may include vertical mixed-use. At major intersections/secondary arterials near transit. Dev intensity: >12 du/acre; predominantly residential with compatible non-residential.
 
-Neighborhood Centers: Mix of retail, services, community gathering. Predominantly non-residential. Scaled to adjacent residential areas. Served by local roads. Dev intensity: 5-10 acres; 30,000-100,000sf leasable; serves 3-mile radius.
+Neighborhood Centers: Mix of retail, services, community gathering. Predominantly non-residential. Scaled to adjacent residential. Served by local roads. Dev intensity: 5-10 acres; 30,000-100,000sf leasable; serves 3-mile radius.
 
-Community Centers: Compact development, primarily non-residential, serving collection of neighborhoods. Mix of retail, services, office, multifamily, entertainment. At major arterial intersections, highways, turnpike corridors. Dev intensity: 10-30 acres; 100,000-450,000sf leasable; serves 3-6 mile radius.
+Community Centers: Compact primarily non-residential, mix of retail, services, office, multifamily, entertainment. At major arterial intersections, highways, turnpike corridors. Dev intensity: 10-30 acres; 100,000-450,000sf leasable; serves 3-6 mile radius.
 
-Regional Centers: High activity destination. Mix of retail, services, entertainment, employment. Along major highways, turnpikes, major transit. Dev intensity: >30 acres; >450,000sf; serves 5-15 mile radius.
+Regional Centers: High activity destination. Mix of retail, services, entertainment, employment. Along major highways, turnpikes, major transit. Dev intensity: >30 acres; >450,000sf.
 
-Transit-Oriented Centers: Concentrated activity with maximum transit access. Mixed-use live/work/play. Within ¼-½ mile of transit/rail. Dev intensity: >12 du/acre.
+Transit-Oriented Centers: Mixed-use live/work/play. Within 1/4-1/2 mile of transit/rail. Dev intensity: >12 du/acre.
 
-Business Centers: Cluster of business offices and/or low impact industry. Operations internal to buildings with minimal negative impacts. At major arterial intersections or transit areas. Compatible with adjacent development in architecture, character, scale, and intensity.
+Business Centers: Cluster of business offices and/or low impact industry. Operations internal to buildings with minimal negative impacts. At major arterial intersections or transit areas.
 
-Industry Centers: Cluster of trade and industry. May require substantial infrastructure. May result in significant negative impacts (sound, air, traffic, outdoor lighting, storage, semi-truck traffic, loading docks, visible outdoor storage). Along major arterials and highways.
+Industry Centers: Cluster of trade and industry. May require substantial infrastructure. Significant negative impacts possible (semi-truck traffic, loading docks, visible outdoor storage).
 
-Parks and Open Space (Public and Private): Parks, recreation, open space, natural areas, floodplains.
+Parks and Open Space: Parks, recreation, open space, natural areas, floodplains.
+
+COMP PLAN CONSISTENCY RULE: A rezoning from SF to commercial is unlikely to be supported unless the FLUM designates the area for commercial use OR the property is at an arterial intersection within a Traditional or Compact Neighborhoods designation (which allows limited convenience retail up to 3 acres). Downtown addresses should check the DT land use matrix first — most uses are permitted by right and no rezoning is needed.
 
 ---
 
 STAFF REPORT ANALYTICAL PATTERNS:
 
-STRAIGHT REZONING: Staff evaluates how closely the proposed district follows Envision Garland 2030. Straight rezonings generally do not require Concept Plan approval. Development dependent on GDC standards. If approved, all GDC standards apply.
+STRAIGHT REZONING: Staff evaluates how closely proposed district follows Envision Garland 2030. Development dependent on GDC standards. If approved, all GDC standards apply.
 
-PD REZONING: Each deviation from base zoning standards evaluated individually. Concept Plan required — development must conform to approved Concept Plan. Staff notes whether each requested deviation is supportable.
+PD REZONING: Each deviation from base zoning standards evaluated individually. Concept Plan required. Staff notes whether each requested deviation is supportable.
 
-SUP: Staff evaluates all 7 criteria, conducts proximity analysis, gives firm recommendation with rationale. If recommending approval, staff includes recommended conditions including time period (typically 5-8 years for no site improvements).
+SUP: Staff evaluates all 7 criteria, conducts proximity analysis, gives firm recommendation with rationale. If recommending approval, includes recommended conditions including time period (typically 5-8 years for no site improvements).
 
-COMPREHENSIVE PLAN: Staff identifies FLUM designation, describes what it calls for, evaluates whether proposed use/district is consistent, and states clearly whether request is consistent or inconsistent.
+COMPREHENSIVE PLAN: Staff identifies FLUM designation, describes what it calls for, evaluates consistency, and states clearly whether request is consistent or inconsistent.
 
-COMPATIBILITY: Staff describes surrounding zoning and land uses in all four directions, evaluates compatibility, notes required buffering/screening, and considers traffic/noise/other impacts on adjacent residential.
+COMPATIBILITY: Staff describes surrounding zoning and land uses in all four directions, evaluates compatibility, notes required buffering/screening, and considers traffic/noise/other impacts.
 
 ---
 
