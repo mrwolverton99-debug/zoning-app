@@ -10,13 +10,13 @@ const YELLOW = '#f59e0b'
 const YELLOW_LIGHT = '#fffbeb'
 const RED = '#b91c1c'
 const RED_LIGHT = '#fef2f2'
-const GRAY = '#f8f9fb'
+const GRAY = '#eef1f7'
 const BORDER = '#e2e6ed'
 
 const styles = {
   root: {
     fontFamily: "Georgia, serif",
-    background: '#f4f6fa',
+    background: `#eef1f7 url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231a2744' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
     minHeight: '100vh',
     margin: 0,
     padding: 0,
@@ -55,9 +55,9 @@ const styles = {
     textTransform: 'uppercase',
   },
   main: {
-    maxWidth: '1200px',
+    maxWidth: '1600px',
     margin: '0 auto',
-    padding: '32px 24px',
+    padding: '32px 32px',
   },
   searchCard: {
     background: 'white',
@@ -369,7 +369,7 @@ export default function App() {
               </div>
               <div style={styles.dataRow}>
                 <span style={styles.dataLabel}>City / ZIP</span>
-                <span style={styles.dataValue}>Garland TX {r.zipcode?.trim()}</span>
+                <span style={styles.dataValue}>Garland TX {r.zipcode?.trim().replace(/^(\d{5})(\d{4})$/, '$1-$2')}</span>
               </div>
               <div style={styles.dataRow}>
                 <span style={styles.dataLabel}>Account No.</span>
@@ -537,7 +537,7 @@ export default function App() {
             <div style={styles.disclaimer}>
               ✓ Results appear subject to staff review and do not constitute zoning approval or compliance
               determination. Verify all information with Garland Planning & Development staff before
-              submitting permit applications. 972-205-2500.
+              submitting permit applications. 972-205-2454.
             </div>
 
           </div>

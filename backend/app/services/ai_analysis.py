@@ -194,7 +194,7 @@ Industry Centers: Cluster of trade and industry. May require substantial infrast
 
 Parks and Open Space: Parks, recreation, open space, natural areas, floodplains.
 
-COMP PLAN CONSISTENCY RULE: A rezoning from SF to commercial is unlikely to be supported unless the FLUM designates the area for commercial use OR the property is at an arterial intersection within a Traditional or Compact Neighborhoods designation (which allows limited convenience retail up to 3 acres). Downtown addresses should check the DT land use matrix first — most uses are permitted by right and no rezoning is needed.
+COMP PLAN CONSISTENCY RULE: A rezoning from SF to commercial is unlikely to be supported unless the FLUM designates the area for commercial use OR the property is at an arterial intersection within a Traditional or Compact Neighborhoods designation (which allows limited convenience retail up to 3 acres). When recommending a rezoning path, recommend the LEAST INTENSE commercial district that permits the proposed use — working from NS (neighborhood scale, max 3 acres) → CR (community retail) → LC/HC (commercial/industrial service) → IN (industrial). Only recommend Downtown (DT) as a rezoning option if the property is actually located in or immediately adjacent to the Downtown district. Do not recommend DT for properties in residential neighborhoods far from downtown. Street classification matters — arterial streets (major divided roads) support commercial rezoning; local residential streets (two-lane neighborhood roads) do not.
 
 ---
 
@@ -209,6 +209,10 @@ SUP: Staff evaluates all 7 criteria, conducts proximity analysis, gives firm rec
 COMPREHENSIVE PLAN: Staff identifies FLUM designation, describes what it calls for, evaluates consistency, and states clearly whether request is consistent or inconsistent.
 
 COMPATIBILITY: Staff describes surrounding zoning and land uses in all four directions, evaluates compatibility, notes required buffering/screening, and considers traffic/noise/other impacts.
+
+---
+
+STREET CLASSIFICATION GUIDANCE: Local residential streets (Drive, Circle, Court, Place, Cove, Lane, Path, Way when in residential areas) are typically G or F classification and do not support commercial rezoning. Major arterials in Garland include: N/S Garland Ave, N/S Jupiter Rd, N/S Shiloh Rd, N/S Plano Rd, N/S Country Club Rd, W/E Buckingham Rd, W/E Kingsley Rd, W/E Oates Rd, W/E Miller Rd, W/E Walnut St, W/E Campbell Rd, Naaman Forest Blvd, Firewheel Pkwy, Belt Line Rd, Northwest Hwy, Broadway Blvd, Lavon Dr, and LBJ/I-30 frontage roads. When a property is on a clearly local residential street, state directly that the street classification does not support commercial rezoning and staff would likely deny on that basis alone.
 
 ---
 
