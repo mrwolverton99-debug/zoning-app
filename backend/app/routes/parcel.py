@@ -12,7 +12,10 @@ def lookup(address: str, proposed_use: str = None):
     if parcel is None:
         raise HTTPException(status_code=404, detail="Parcel not found in DCAD data")
 
-    zoning = get_parcel_zoning(address)
+    # Use normalized address for GIS lookup
+    normalized = parcel.get("normalized_address", address)
+    
+    zoning = get_parcel_zoning(normalized)
     if zoning is None:
         raise HTTPException(status_code=404, detail="Zoning not found in Garland GIS")
 
