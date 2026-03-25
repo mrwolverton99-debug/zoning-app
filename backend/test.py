@@ -15,17 +15,15 @@ s = requests.Session()
 s.mount('https://', LegacySSL())
 
 params = {
-    "geometry": "-96.60136564,32.85808757",
-    "geometryType": "esriGeometryPoint",
-    "inSR": "4326",
-    "spatialRel": "esriSpatialRelIntersects",
+    "where": "1=1",
     "outFields": "*",
     "returnGeometry": "false",
+    "resultRecordCount": 5,
     "f": "json"
 }
 
 r = s.get(
-    "https://maps.garlandtx.gov/arcgis/rest/services/Planning/GarlandZoningWebmap/MapServer/1/query",
+    "https://maps.garlandtx.gov/arcgis/rest/services/Planning/Long_Range_Plans/MapServer/0/query",
     params=params
 )
 print(r.json())

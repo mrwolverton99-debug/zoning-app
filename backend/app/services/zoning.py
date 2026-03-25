@@ -19,6 +19,7 @@ def get_session():
 ADDRESS_URL = "https://maps.garlandtx.gov/arcgis/rest/services/Planning/GarlandZoningWebmap/MapServer/3/query"
 ZONING_URL = "https://maps.garlandtx.gov/arcgis/rest/services/Planning/GarlandZoningWebmap/MapServer/0/query"
 FLUM_URL = "https://maps.garlandtx.gov/arcgis/rest/services/Planning/GarlandZoningWebmap/MapServer/1/query"
+DAO_URL = "https://maps.garlandtx.gov/arcgis/rest/services/Planning/GarlandZoningWebmap/MapServer/6/query"
 
 def get_parcel_zoning(address: str):
     s = get_session()
@@ -79,6 +80,22 @@ def get_parcel_zoning(address: str):
         flum_designation = flum_features[0]["attributes"].get("SUB_CATEGO")
         flum_category = flum_features[0]["attributes"].get("CATEGORY")
 
+    # Step 4: check Downtown Automotive Overlay
+    in_dao = False
+    if base_zone == "DT":
+        dao_params = {
+            "geometry": f"{lng},{lat}",
+            "geometryType": "esriGeometryPoint",
+            "inSR": "4326",
+            "spatialRel": "esriSpatialRelIntersects",
+            "outFields": "LABEL",
+            "returnGeometry": "false",
+            "f": "json"
+        }
+        dao_resp = s.get(DAO_URL, params=dao_params)
+        dao_data = dao_resp.json()
+        in_dao = len(dao_data.get("features", [])) > 0
+    
     gdc_zoning = z.get("GDC_ZONING") or ""
     pd_num = z.get("PD_NUM", "").strip() or None
     has_existing_sup = gdc_zoning.startswith("S ") and not is_pd
@@ -96,4 +113,5 @@ def get_parcel_zoning(address: str):
         "requires_manual_review": is_pd,
         "flum_designation": flum_designation,
         "flum_category": flum_category,
+        "in_downtown_automotive_overlay": in_dao,
     }

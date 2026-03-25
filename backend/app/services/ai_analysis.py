@@ -50,7 +50,9 @@ UR: Predominantly residentially-oriented mixed-use. Limited integrated nonreside
 UB: Predominantly business/shopping-oriented. May include integrated residential uses.
 
 DT (Downtown): Has five sub-districts: Downtown Historic (DH), Downtown Square (DS), Uptown (UP), InTown Residential (IR), and Suburban Corridor (SC). Downtown is generally permissive — restaurant, retail store, office, multifamily, live-work, and most commercial uses are permitted by right in most DT sub-districts. Breweries/wineries/distilleries require SUP in all DT sub-districts. Restaurant is permitted by right in all five DT sub-districts.
+    DOWNTOWN REZONING RULE: Staff will NEVER recommend rezoning a Downtown-zoned property to LC, HC, or IN. Downtown properties are core to Garland's revitalization strategy. The only path to adding a non-listed use in Downtown is through a Downtown PD amendment — but even this is essentially a non-starter for automotive uses which conflict with the pedestrian-oriented downtown vision. For automotive uses in Downtown, the correct answer is: this use is not viable at this location, period. Direct the applicant to find a location zoned LC, HC, or IN outside of downtown.
 
+    DOWNTOWN SUB-DISTRICTS: The GIS data returns "DT" for all downtown parcels without sub-district detail. Note in the analysis that the specific sub-district (DS, DH, UP, IR, SC) affects which uses are permitted and recommend verifying the sub-district with Garland Planning staff. Restaurant is permitted by right in all DT sub-districts. Most retail and office uses are permitted by right. Breweries/distilleries require SUP in all sub-districts.
 ---
 
 DIMENSIONAL STANDARDS:
@@ -245,6 +247,7 @@ PROPERTY INFORMATION:
 - Is Planned Development: {zoning_data.get('is_planned_development', False)}
 - Future Land Use Map Designation: {zoning_data.get('flum_designation', 'Unknown')} ({zoning_data.get('flum_category', '')})
 - Existing SUP on Parcel: {zoning_data.get('existing_sup_num') or 'None'}
+- In Downtown Automotive Overlay: {zoning_data.get('in_downtown_automotive_overlay', False)}
 
 PROPOSED USE (plain language description from applicant):
 {proposed_use}

@@ -36,8 +36,17 @@ def check_use(district: str, proposed_use: str):
     if district not in df.columns:
         return None
     
-    # fuzzy match against use_name
-    matches = df[df["use_name"].str.lower().str.contains(proposed, na=False)]
+    # Build search terms from proposed use
+    search_terms = proposed.lower().split()
+
+    # Score each row by how many terms match
+    def score_row(use_name):
+        name_lower = use_name.lower()
+        return sum(1 for term in search_terms if term in name_lower)
+
+    df['_score'] = df['use_name'].apply(score_row)
+    matches = df[df['_score'] > 0].sort_values('_score', ascending=False)
+    df.drop('_score', axis=1, inplace=True)
     
     if matches.empty:
         return {"match": None, "status": "not_found", "message": f"No matching use type found for '{proposed_use}'"}
