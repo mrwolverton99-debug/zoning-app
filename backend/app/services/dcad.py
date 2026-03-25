@@ -21,8 +21,12 @@ DIRECTION_MAP = {
 
 DIRECTIONS = ["N", "S", "E", "W"]
 
+import re
 
 def normalize_address(address: str) -> str:
+    # Strip suite/unit numbers before normalization
+    address = re.sub(r'\s+(suite|ste|apt|unit|#)\s*[\w-]+', '', address, flags=re.IGNORECASE).strip()
+    
     parts = address.upper().strip().split()
     if len(parts) < 2:
         return address.upper().strip()
