@@ -12,7 +12,6 @@ def lookup(address: str, proposed_use: str = None):
     if parcel is None:
         raise HTTPException(status_code=404, detail="Parcel not found in DCAD data")
 
-    # Use normalized address for GIS lookup
     normalized = parcel.get("normalized_address", address)
     
     zoning = get_parcel_zoning(normalized)
@@ -20,12 +19,15 @@ def lookup(address: str, proposed_use: str = None):
         raise HTTPException(status_code=404, detail="Zoning not found in Garland GIS")
 
     district = zoning.get("base_zone", "")
-    result = {**parcel, **zoning}
+    dt_sub = zoning.get("dt_subdistrict")
+    lookup_district = dt_sub if dt_sub else district
+
+    result = {**parcel, **zoning}  # ← this line, restored
 
     if not zoning["is_planned_development"] and district:
-        result["land_uses"] = get_uses_for_district(district)
+        result["land_uses"] = get_uses_for_district(lookup_district)
         if proposed_use:
-            use_check = check_use(district, proposed_use)
+            use_check = check_use(lookup_district, proposed_use)
             result["proposed_use_check"] = use_check
             try:
                 result["ai_analysis"] = get_ai_analysis(

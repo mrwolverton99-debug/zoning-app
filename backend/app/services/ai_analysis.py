@@ -52,7 +52,47 @@ UB: Predominantly business/shopping-oriented. May include integrated residential
 DT (Downtown): Has five sub-districts: Downtown Historic (DH), Downtown Square (DS), Uptown (UP), InTown Residential (IR), and Suburban Corridor (SC). Downtown is generally permissive — restaurant, retail store, office, multifamily, live-work, and most commercial uses are permitted by right in most DT sub-districts. Breweries/wineries/distilleries require SUP in all DT sub-districts. Restaurant is permitted by right in all five DT sub-districts.
     DOWNTOWN REZONING RULE: Staff will NEVER recommend rezoning a Downtown-zoned property to LC, HC, or IN. Downtown properties are core to Garland's revitalization strategy. The only path to adding a non-listed use in Downtown is through a Downtown PD amendment — but even this is essentially a non-starter for automotive uses which conflict with the pedestrian-oriented downtown vision. For automotive uses in Downtown, the correct answer is: this use is not viable at this location, period. Direct the applicant to find a location zoned LC, HC, or IN outside of downtown.
 
-    DOWNTOWN SUB-DISTRICTS: The GIS data returns "DT" for all downtown parcels without sub-district detail. Note in the analysis that the specific sub-district (DS, DH, UP, IR, SC) affects which uses are permitted and recommend verifying the sub-district with Garland Planning staff. Restaurant is permitted by right in all DT sub-districts. Most retail and office uses are permitted by right. Breweries/distilleries require SUP in all sub-districts.
+    DOWNTOWN SUB-DISTRICTS: The GIS data returns "DT" for all downtown parcels. The specific 
+    sub-district is detected via polygon analysis and passed as 'Downtown Sub-District' below.
+    Always reference the specific sub-district in your analysis when provided — do not just say 
+    "Downtown district" generically.
+
+    Sub-district purposes per GDC Chapter 7:
+    - DS (Downtown Square): Primarily retail and pedestrian-generating uses surrounding the 
+      Downtown Square. Tight street network, wide sidewalks, dense street trees, buildings close 
+      to sidewalks. The most restrictive sub-district for non-pedestrian uses.
+    - DH (Downtown Historic): Mixed-use, office, retail and urban lifestyle housing. Wide range 
+      of residential types: townhouses, live/work, apartments, condos, lofts. Tight street 
+      network, wide sidewalks, dense street trees, buildings close to sidewalks.
+    - U (Uptown): Mixed-use office, retail and urban lifestyle housing. Wide range of residential 
+      types. Variable setbacks and landscaping. Medium-sized blocks defined by streets with dense 
+      tree coverage and sidewalks.
+    - IR (InTown Residential): Lower density residential — single-family and patio home — adjacent 
+      to higher density mixed-use zones. Home occupations and outbuildings allowed. IR North allows 
+      certain additional non-residential uses per Table 7-1. Deep setbacks, heavily streetscaped 
+      roads, sidewalk set back from curb with minimum 5 ft landscaping and street trees.
+    - SC (Suburban Corridor): Low-density commercial between low-density residential and higher 
+      density Downtown sub-districts. May include some mixed-use. Buildings may be built close to 
+      sidewalks with parking beside/behind, or set back up to 60 ft with urban sidewalk and street 
+      trees.
+
+    When a sub-district is identified, tailor the analysis to that sub-district specifically:
+    - DS: Emphasize pedestrian retail character. Non-pedestrian uses (automotive, industrial, 
+      drive-throughs) are fundamentally incompatible. Staff will frame any denial in terms of 
+      the Square's role in Garland's revitalization.
+    - DH: Similar to DS but slightly more flexible on some uses. Still pedestrian-oriented.
+    - U: More flexible than DH/DS. Larger footprints and some auto-oriented uses may be more 
+      discussable here than at the Square.
+    - IR: Residential character dominates. Non-residential uses face high scrutiny. Most 
+      commercial uses will be incompatible.
+    - SC: Most flexible DT sub-district for commercial uses. Some auto-oriented uses may be 
+      viable here that would be non-starters in DS/DH.
+
+    DOWNTOWN REZONING RULE: Staff will NEVER recommend rezoning a Downtown-zoned property to 
+    LC, HC, or IN. The only path to adding a non-listed use is a Downtown PD amendment — but 
+    even this is essentially a non-starter for automotive uses which conflict with the 
+    pedestrian-oriented downtown vision. For automotive uses in Downtown, direct the applicant 
+    to find LC, HC, or IN outside of downtown.
 ---
 
 DIMENSIONAL STANDARDS:
@@ -244,6 +284,7 @@ def get_ai_analysis(address: str, zoning_data: dict, use_check: dict, proposed_u
 PROPERTY INFORMATION:
 - Address: {address}
 - Zoning District: {district}
+- Downtown Sub-District: {zoning_data.get('dt_subdistrict') or 'Not determined'}
 - Is Planned Development: {zoning_data.get('is_planned_development', False)}
 - Future Land Use Map Designation: {zoning_data.get('flum_designation', 'Unknown')} ({zoning_data.get('flum_category', '')})
 - Existing SUP on Parcel: {zoning_data.get('existing_sup_num') or 'None'}
@@ -255,8 +296,9 @@ PROPOSED USE (plain language description from applicant):
 LAND USE MATRIX RESULT:
 - Matched GDC Use Type: {use_check.get('match', 'No match found')}
 - Category: {use_check.get('category', '')}
-- Status in {district}: {use_check.get('status', 'unknown')}
+- Status in {district} ({zoning_data.get('dt_subdistrict') or 'sub-district unknown'}): {use_check.get('status', 'unknown')}
 - Matrix Message: {use_check.get('message', '')}
+{f"- Use Variants: {use_check.get('variants')}" if use_check.get('variants') else ''}
 
 Provide a complete pre-application analysis in the JSON format specified."""
 

@@ -6,9 +6,9 @@ DT_DISTRICTS = ["DH", "DS", "U", "IR", "SC"]
 # (category, use_name, [DH, DS, U, IR, SC])
 dt_matrix = [
     # RESIDENTIAL - ACCESSORY DWELLINGS
-    ("Residential", "Dwelling, Accessory - Guest House", ["P","P","P","P",""]),
-    ("Residential", "Dwelling, Accessory - Rental Unit", ["P","P","P","P",""]),
-    ("Residential", "Dwelling, Accessory - Guard/Manager/Caretaker", ["P","P","P","P",""]),
+    ("Residential", "Dwelling, Accessory - Guest House", ["P","","P","P","P"]),
+    ("Residential", "Dwelling, Accessory - Rental Unit", ["P","","P","P","P"]),
+    ("Residential", "Dwelling, Accessory - Guard/Manager/Caretaker", ["P","","P","P","p"]),
     # ELDER CARE
     ("Residential", "Elder Care - Independent Living", ["P","P","","",""]),
     ("Residential", "Elder Care - Assisted Living", ["","P","","",""]),

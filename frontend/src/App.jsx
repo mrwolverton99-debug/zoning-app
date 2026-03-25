@@ -108,7 +108,7 @@ const styles = {
   },
   grid: {
     display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(420px, 1fr))',
     gap: '20px',
   },
   gridFull: {
@@ -271,6 +271,42 @@ function StatusPill({ status }) {
   )
 }
 
+function CollapsibleUseList({ items, color, bullet, initialShow = 5 }) {
+  const [expanded, setExpanded] = useState(false)
+  if (!items?.length) return null
+  const visible = expanded ? items : items.slice(0, initialShow)
+  const hidden = items.length - initialShow
+
+  return (
+    <>
+      <ul style={styles.useList}>
+        {visible.map(u => (
+          <li key={u} style={{ ...styles.useItem, color: color || '#334155' }}>
+            <span style={{ color: bullet, fontSize: '10px' }}>●</span> {u}
+          </li>
+        ))}
+      </ul>
+      {items.length > initialShow && (
+        <button
+          onClick={() => setExpanded(!expanded)}
+          style={{
+            background: 'none',
+            border: 'none',
+            color: '#64748b',
+            fontSize: '12px',
+            cursor: 'pointer',
+            padding: '6px 0 2px',
+            letterSpacing: '0.5px',
+            textDecoration: 'underline',
+          }}
+        >
+          {expanded ? '▲ Show less' : `▼ Show ${hidden} more`}
+        </button>
+      )}
+    </>
+  )
+}
+
 function Card({ title, children, accent, fullWidth, badge }) {
   return (
     <div style={{ ...styles.card, ...(fullWidth ? styles.gridFull : {}) }}>
@@ -395,19 +431,17 @@ export default function App() {
                 <>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px', marginBottom: '12px' }}>
                     <span style={styles.districtBig}>{r.base_zone}</span>
-                    {r.gdc_zoning && r.gdc_zoning !== r.base_zone && (
-                      <span style={{ fontSize: '14px', color: '#64748b' }}>{r.gdc_zoning}</span>
-                    )}
-                  </div>
-                  {r.has_existing_sup && (
-                    <div style={styles.supWarning}>
-                      <strong>Existing SUP on Parcel: {r.existing_sup_num}</strong>
-                      <p style={{ margin: '4px 0 0', fontSize: '12px' }}>
-                        A Specific Use Provision is recorded on this parcel. Verify which suite and use
-                        it covers with Garland Planning before assuming coverage.
-                      </p>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                      {r.dt_subdistrict && (
+                        <span style={{ ...styles.pill, background: ACCENT, color: NAVY, fontSize: '11px' }}>
+                         {r.dt_subdistrict} Sub-District
+                        </span>
+                      )}
+                      {r.gdc_zoning && r.gdc_zoning !== r.base_zone && (
+                        <span style={{ fontSize: '14px', color: '#64748b' }}>{r.gdc_zoning}</span>
+                      )}
                     </div>
-                  )}
+                  </div>
                 </>
               )}
             </Card>
@@ -435,41 +469,34 @@ export default function App() {
 
             {/* Permitted Uses */}
             {r.land_uses && !r.requires_manual_review && (
-              <Card title={`Permitted Uses — ${r.base_zone}`}>
+              <Card title={`Permitted Uses — ${r.land_uses?.subdistrict ? `DT (${r.land_uses.subdistrict})` : r.base_zone}`}>
                 {r.land_uses.permitted_by_right?.length > 0 && (
                   <>
                     <div style={styles.sectionLabel}>✓ By Right</div>
-                    <ul style={styles.useList}>
-                      {r.land_uses.permitted_by_right.map(u => (
-                        <li key={u} style={styles.useItem}>
-                          <span style={{ color: GREEN, fontSize: '10px' }}>●</span> {u}
-                        </li>
-                      ))}
-                    </ul>
+                    <CollapsibleUseList
+                      items={r.land_uses.permitted_by_right}
+                      bullet={GREEN}
+                    />
                   </>
                 )}
                 {r.land_uses.requires_sup?.length > 0 && (
                   <>
                     <div style={{ ...styles.sectionLabel, marginTop: '16px' }}>⚠ Requires SUP</div>
-                    <ul style={styles.useList}>
-                      {r.land_uses.requires_sup.map(u => (
-                        <li key={u} style={{ ...styles.useItem, color: '#92400e' }}>
-                          <span style={{ color: YELLOW, fontSize: '10px' }}>●</span> {u}
-                        </li>
-                      ))}
-                    </ul>
+                    <CollapsibleUseList
+                      items={r.land_uses.requires_sup}
+                      color="#92400e"
+                      bullet={YELLOW}
+                    />
                   </>
                 )}
                 {r.land_uses.special_standards?.length > 0 && (
                   <>
                     <div style={{ ...styles.sectionLabel, marginTop: '16px' }}>★ Special Standards</div>
-                    <ul style={styles.useList}>
-                      {r.land_uses.special_standards.map(u => (
-                        <li key={u} style={{ ...styles.useItem, color: '#1e40af' }}>
-                          <span style={{ color: '#93c5fd', fontSize: '10px' }}>●</span> {u}
-                        </li>
-                      ))}
-                    </ul>
+                    <CollapsibleUseList
+                      items={r.land_uses.special_standards}
+                      color="#1e40af"
+                      bullet="#93c5fd"
+                    />
                   </>
                 )}
               </Card>
