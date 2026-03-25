@@ -313,10 +313,13 @@ def _check_split_use(proposed_use: str, district: str, lookup_col: str) -> dict 
         )
         match_str = f"{base} — clarification needed"
 
+    best_order = ["permitted_by_right", "special_standards", "requires_sup", "requires_rezoning", "prohibited"]
+    best = min(statuses, key=lambda s: best_order.index(s) if s in best_order else 99)
+    
     result = {
         "match":    match_str,
         "category": results[0]["category"],
-        "status":   worst,
+        "status":   best if not all_same else worst,
         "message":  message,
         "variants": results,
     }

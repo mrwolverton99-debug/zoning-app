@@ -257,10 +257,12 @@ def get_parcel_zoning(address: str, lat: float = None, lng: float = None):
     base_zone = z.get("BASE_ZONE") or ""
     is_pd = "PD" in base_zone.upper()
 
-    # Step 3: coordinates to FLUM
+# Step 3: coordinates to FLUM
+    # Use a small buffer around the point to handle geocoder coordinate offset
+    offset = 0.0003  # roughly 30 meters
     flum_params = {
-        "geometry": f"{lng},{lat}",
-        "geometryType": "esriGeometryPoint",
+        "geometry": f"{lng - offset},{lat - offset},{lng + offset},{lat + offset}",
+        "geometryType": "esriGeometryEnvelope",
         "inSR": "4326",
         "spatialRel": "esriSpatialRelIntersects",
         "outFields": "SUB_CATEGO,CATEGORY",
