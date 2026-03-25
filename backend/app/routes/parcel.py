@@ -7,15 +7,29 @@ from app.services.ai_analysis import get_ai_analysis
 
 router = APIRouter()
 
+@router.get("/suggest")
+async def suggest(q: str, city: str = "garland"):
+    if len(q.strip()) < 3:
+        return {"suggestions": []}
+    from app.services.dcad import get_df, normalize_address
+    df = await run_in_threadpool(get_df, city)
+    q_upper = q.upper().strip()
+    normalized = normalize_address(q).upper()
+    matches = df[
+        df["full_address"].str.startswith(q_upper) |
+        df["full_address"].str.startswith(normalized)
+    ].head(8)
+    return {"suggestions": matches["full_address"].drop_duplicates().tolist()}
+
+
 @router.get("/lookup")
 async def lookup(address: str, proposed_use: str = None, city: str = "garland"):
     parcel = await run_in_threadpool(lookup_parcel, address, city)
-    # ... pass city through to all service calls
     geocoded = False
     lat, lng = None, None
 
     if parcel is None:
-        coords = await run_in_threadpool(geocode_address, address)
+        coords = await run_in_threadpool(geocode_address, address, city)
         if coords is None:
             raise HTTPException(
                 status_code=404,
@@ -34,7 +48,7 @@ async def lookup(address: str, proposed_use: str = None, city: str = "garland"):
         }
 
     normalized = parcel.get("normalized_address", address)
-    zoning = await run_in_threadpool(get_parcel_zoning, normalized, lat, lng)
+    zoning = await run_in_threadpool(get_parcel_zoning, normalized, lat, lng, city)
 
     if zoning is None:
         raise HTTPException(
@@ -51,8 +65,8 @@ async def lookup(address: str, proposed_use: str = None, city: str = "garland"):
     if geocoded:
         result["geocoded_fallback"] = True
         result["geocoded_note"] = (
-            "Address not found in DCAD — parcel details unavailable. "
-            "Zoning retrieved via coordinates only."
+            "Address not in DCAD — account number unavailable. "
+            "Zoning and FLUM retrieved via coordinates."
         )
 
     if not zoning["is_planned_development"] and district:
@@ -62,8 +76,8 @@ async def lookup(address: str, proposed_use: str = None, city: str = "garland"):
             result["proposed_use_check"] = use_check
             if use_check and use_check.get("status") != "not_found":
                 try:
-                    result["ai_analysis"] = get_ai_analysis(
-                        address, zoning, use_check, proposed_use
+                    result["ai_analysis"] = await run_in_threadpool(
+                        get_ai_analysis, address, zoning, use_check, proposed_use
                     )
                 except Exception as e:
                     result["ai_analysis_error"] = str(e)
