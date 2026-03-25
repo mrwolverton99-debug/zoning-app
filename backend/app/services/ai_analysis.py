@@ -7,6 +7,17 @@ load_dotenv()
 
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 
+DISTRICT_NAMES = {
+    'AG': 'Agricultural', 'SF-E': 'Single-Family Estate',
+    'SF-10': 'Single-Family Residential', 'SF-7': 'Single-Family Residential',
+    'SF-5': 'Single-Family Residential', 'SFA': 'Single-Family Attached',
+    '2F': 'Two-Family', 'MF': 'Multifamily', 'NO': 'Neighborhood Office',
+    'CO': 'Community Office', 'NS': 'Neighborhood Service',
+    'CR': 'Community Retail', 'LC': 'Limited Commercial',
+    'HC': 'Heavy Commercial', 'IN': 'Industrial',
+    'UR': 'Urban Residential', 'UB': 'Urban Business', 'DT': 'Downtown',
+}
+
 SYSTEM_PROMPT = """You are a municipal planning analyst with deep expertise in the Garland Development Code (GDC) and the Envision Garland 2030 Comprehensive Plan. Your role is to provide pre-application zoning analysis to contractors, developers, and property owners in the City of Garland, Texas.
 
 You analyze proposed projects against the GDC and provide clear, plain-language assessments of what approvals will likely be needed, what staff will likely say, and what red flags exist before a permit application is submitted.
@@ -249,6 +260,17 @@ COMP PLAN CONSISTENCY RULE: A rezoning from SF to commercial is unlikely to be s
 
 STAFF REPORT ANALYTICAL PATTERNS:
 
+PERMITTED BY RIGHT — STREAMLINED ANALYSIS:
+When a use is permitted by right with no SUP, rezoning, or variance needed:
+- Do NOT discuss staff support or staff recommendation — staff is not involved
+- Do NOT discuss FLUM compatibility at length — it's irrelevant if the use is already permitted
+- Summary should be 1-2 sentences max: use is permitted, here's the permit path
+- Approval path: building permit only (existing structure) or site permit + building permit (new construction)
+- Likely staff position: leave blank or say "No Planning staff involvement required — proceed directly to Building Inspections"
+- Key considerations: focus only on dimensional standards, parking, landscaping triggers
+- Next steps: go get your permit, nothing else
+- Reserve the full analysis treatment for SUP, rezoning, PD, and variance cases where staff judgment actually matters
+
 STRAIGHT REZONING: Staff evaluates how closely proposed district follows Envision Garland 2030. Development dependent on GDC standards. If approved, all GDC standards apply.
 
 PD REZONING: Each deviation from base zoning standards evaluated individually. Concept Plan required. Staff notes whether each requested deviation is supportable.
@@ -285,6 +307,10 @@ Be direct. Do not sugarcoat prohibited uses or likely denials. Contractors need 
 
 def get_ai_analysis(address: str, zoning_data: dict, use_check: dict, proposed_use: str) -> dict:
     district = zoning_data.get("base_zone", "")
+    district_full = f"{district} ({DISTRICT_NAMES.get(district, district)})"
+    dt_sub = zoning_data.get("dt_subdistrict")
+    if dt_sub:
+        district_full = f"DT — {dt_sub} Sub-District (Downtown)"
 
     user_message = f"""Analyze this proposed project and provide a pre-application zoning assessment.
 
