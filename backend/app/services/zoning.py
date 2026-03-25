@@ -2,6 +2,56 @@ import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.ssl_ import create_urllib3_context
 
+
+def geocode_address(address: str) -> tuple[float, float] | None:
+    """
+    Fallback geocoder — tries Census Bureau first, then Nominatim (OSM).
+    Returns (lat, lng) or None if both fail.
+    """
+    import urllib.parse
+    import urllib.request
+    import json
+
+    full_address = f"{address}, Garland, TX 75040"
+
+    # ── Try 1: Census Bureau ─────────────────────────────────────────────
+    try:
+        encoded = urllib.parse.quote(full_address)
+        url = (
+            "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress"
+            f"?address={encoded}&benchmark=Public_AR_Current&format=json"
+        )
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=5) as r:
+            data = json.loads(r.read())
+        matches = data.get("result", {}).get("addressMatches", [])
+        if matches:
+            c = matches[0]["coordinates"]
+            return float(c["y"]), float(c["x"])
+    except Exception:
+        pass
+
+    # ── Try 2: Nominatim (OpenStreetMap) ─────────────────────────────────
+    try:
+        encoded = urllib.parse.quote(full_address)
+        url = (
+            f"https://nominatim.openstreetmap.org/search"
+            f"?q={encoded}&format=json&limit=1&countrycodes=us"
+        )
+        req = urllib.request.Request(
+            url,
+            headers={"User-Agent": "GarlandZoningApp/1.0 contact@garlandtx.gov"}
+        )
+        with urllib.request.urlopen(req, timeout=5) as r:
+            data = json.loads(r.read())
+        if data:
+            return float(data[0]["lat"]), float(data[0]["lon"])
+    except Exception:
+        pass
+
+    return None
+
+
 class LegacySSL(HTTPAdapter):
     def init_poolmanager(self, *args, **kwargs):
         ctx = create_urllib3_context()
@@ -11,24 +61,18 @@ class LegacySSL(HTTPAdapter):
         kwargs['ssl_context'] = ctx
         super().init_poolmanager(*args, **kwargs)
 
+
 def get_session():
     s = requests.Session()
     s.mount('https://', LegacySSL())
     return s
+
 
 ADDRESS_URL = "https://maps.garlandtx.gov/arcgis/rest/services/Planning/GarlandZoningWebmap/MapServer/3/query"
 ZONING_URL  = "https://maps.garlandtx.gov/arcgis/rest/services/Planning/GarlandZoningWebmap/MapServer/0/query"
 FLUM_URL    = "https://maps.garlandtx.gov/arcgis/rest/services/Planning/GarlandZoningWebmap/MapServer/1/query"
 DAO_URL     = "https://maps.garlandtx.gov/arcgis/rest/services/Planning/GarlandZoningWebmap/MapServer/6/query"
 
-# ---------------------------------------------------------------------------
-# Downtown sub-district polygons
-# Format: { code: [ [lng, lat], ... ] }  — one list per polygon patch.
-# DS, DH: 1 patch each. IR: 2 patches (north + south). SC: 3 patches.
-# U: 1 patch (large outer district).
-# Boundaries drawn in geojson.io by user, March 2026.
-# Check order DS→DH→SC→IR→U ensures smaller/inner districts win over larger.
-# ---------------------------------------------------------------------------
 _DT_POLYGONS = {
     "DS": [
         [(-96.6377717159665,  32.91389399239365),
@@ -56,7 +100,6 @@ _DT_POLYGONS = {
          (-96.63993045671948, 32.91614156172274)],
     ],
     "SC": [
-        # West strip (along railroad, north section)
         [(-96.64805998947952, 32.91393670039781),
          (-96.64859791121278, 32.91384834800168),
          (-96.64863299306496, 32.91235125232923),
@@ -77,7 +120,6 @@ _DT_POLYGONS = {
          (-96.646292670327,   32.90899899755604),
          (-96.64806439183558, 32.90901386109809),
          (-96.64805998947952, 32.91393670039781)],
-        # South middle strip
         [(-96.64149290217716, 32.908997862009215),
          (-96.64148231609471, 32.90852090455765),
          (-96.63938627177214, 32.90852090455765),
@@ -90,7 +132,6 @@ _DT_POLYGONS = {
          (-96.63616647404076, 32.90832585219262),
          (-96.6361529619898,  32.90897623453648),
          (-96.64149290217716, 32.908997862009215)],
-        # East strip
         [(-96.63077743863609, 32.91701598039286),
          (-96.63074483191298, 32.90887795414892),
          (-96.62999355059057, 32.90886320557965),
@@ -108,7 +149,6 @@ _DT_POLYGONS = {
          (-96.63077743863609, 32.91701598039286)],
     ],
     "IR": [
-        # North patch
         [(-96.6434163786108,  32.9144642527954),
          (-96.64492477326054, 32.91443306384346),
          (-96.64497678686907, 32.913827995996755),
@@ -118,7 +158,6 @@ _DT_POLYGONS = {
          (-96.6442188742863,  32.913597195831116),
          (-96.64343123964159, 32.913422535846905),
          (-96.6434163786108,  32.9144642527954)],
-        # South patch (L-shaped)
         [(-96.64660266628009, 32.91190361977239),
          (-96.64662604324947, 32.91096737215186),
          (-96.64421022619848, 32.91092488425076),
@@ -154,12 +193,10 @@ _DT_POLYGONS = {
     ],
 }
 
-# Smaller/inner districts checked before larger/outer ones
 _DT_CHECK_ORDER = ["DS", "DH", "SC", "IR", "U"]
 
 
 def _point_in_polygon(lat: float, lng: float, polygon: list) -> bool:
-    """Ray casting point-in-polygon. polygon is list of (lng, lat) tuples."""
     n = len(polygon)
     inside = False
     x, y = lng, lat
@@ -174,10 +211,6 @@ def _point_in_polygon(lat: float, lng: float, polygon: list) -> bool:
 
 
 def detect_dt_subdistrict(lat: float, lng: float) -> str | None:
-    """
-    Returns 'DS', 'DH', 'SC', 'IR', or 'U' for the given coordinates,
-    or None if the point falls outside all defined sub-district polygons.
-    """
     for code in _DT_CHECK_ORDER:
         for polygon in _DT_POLYGONS[code]:
             if _point_in_polygon(lat, lng, polygon):
@@ -185,24 +218,26 @@ def detect_dt_subdistrict(lat: float, lng: float) -> str | None:
     return None
 
 
-def get_parcel_zoning(address: str):
+def get_parcel_zoning(address: str, lat: float = None, lng: float = None):
     s = get_session()
 
     # Step 1: address to coordinates
-    addr_params = {
-        "where": f"FULL_ADDRESS = '{address.upper()}'",
-        "outFields": "FULL_ADDRESS,LAT,LONG,GDS_TAXACCTNO,PARCELID",
-        "resultRecordCount": 1,
-        "f": "json"
-    }
-    addr_resp = s.get(ADDRESS_URL, params=addr_params)
-    features = addr_resp.json().get("features", [])
-    if not features:
-        return None
+    # Skip entirely if lat/lng already supplied from geocoder fallback
+    if lat is None or lng is None:
+        addr_params = {
+            "where": f"FULL_ADDRESS = '{address.upper()}'",
+            "outFields": "FULL_ADDRESS,LAT,LONG,GDS_TAXACCTNO,PARCELID",
+            "resultRecordCount": 1,
+            "f": "json"
+        }
+        addr_resp = s.get(ADDRESS_URL, params=addr_params, timeout=10)
+        features = addr_resp.json().get("features", [])
+        if not features:
+            return None
 
-    attrs = features[0]["attributes"]
-    lat = attrs["LAT"]
-    lng = attrs["LONG"]
+        attrs = features[0]["attributes"]
+        lat = attrs["LAT"]
+        lng = attrs["LONG"]
 
     # Step 2: coordinates to zoning
     zone_params = {
@@ -214,7 +249,7 @@ def get_parcel_zoning(address: str):
         "returnGeometry": "false",
         "f": "json"
     }
-    zone_features = s.get(ZONING_URL, params=zone_params).json().get("features", [])
+    zone_features = s.get(ZONING_URL, params=zone_params, timeout=10).json().get("features", [])
     if not zone_features:
         return None
 
@@ -232,7 +267,7 @@ def get_parcel_zoning(address: str):
         "returnGeometry": "false",
         "f": "json"
     }
-    flum_features = s.get(FLUM_URL, params=flum_params).json().get("features", [])
+    flum_features = s.get(FLUM_URL, params=flum_params, timeout=10).json().get("features", [])
     flum_designation = None
     flum_category = None
     if flum_features:
@@ -251,7 +286,7 @@ def get_parcel_zoning(address: str):
             "returnGeometry": "false",
             "f": "json"
         }
-        in_dao = len(s.get(DAO_URL, params=dao_params).json().get("features", [])) > 0
+        in_dao = len(s.get(DAO_URL, params=dao_params, timeout=10).json().get("features", [])) > 0
 
     # Step 5: detect DT sub-district
     dt_subdistrict = detect_dt_subdistrict(lat, lng) if base_zone == "DT" else None
@@ -261,17 +296,17 @@ def get_parcel_zoning(address: str):
     has_existing_sup = gdc_zoning.startswith("S ") and not is_pd
 
     return {
-        "base_zone": base_zone,
-        "gdc_zoning": gdc_zoning,
-        "pd_num": pd_num,
-        "has_existing_sup": has_existing_sup,
-        "existing_sup_num": gdc_zoning if has_existing_sup else None,
-        "lat": lat,
-        "lng": lng,
-        "is_planned_development": is_pd,
-        "requires_manual_review": is_pd,
-        "flum_designation": flum_designation,
-        "flum_category": flum_category,
+        "base_zone":                    base_zone,
+        "gdc_zoning":                   gdc_zoning,
+        "pd_num":                       pd_num,
+        "has_existing_sup":             has_existing_sup,
+        "existing_sup_num":             gdc_zoning if has_existing_sup else None,
+        "lat":                          lat,
+        "lng":                          lng,
+        "is_planned_development":       is_pd,
+        "requires_manual_review":       is_pd,
+        "flum_designation":             flum_designation,
+        "flum_category":                flum_category,
         "in_downtown_automotive_overlay": in_dao,
-        "dt_subdistrict": dt_subdistrict,
+        "dt_subdistrict":               dt_subdistrict,
     }

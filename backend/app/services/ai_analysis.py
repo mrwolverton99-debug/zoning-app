@@ -316,7 +316,8 @@ Provide a complete pre-application analysis in the JSON format specified."""
             "messages": [
                 {"role": "user", "content": user_message}
             ]
-        }
+        },
+        timeout=30
     )
 
     data = response.json()

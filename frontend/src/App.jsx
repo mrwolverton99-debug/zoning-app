@@ -326,22 +326,43 @@ export default function App() {
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
 
-  const handleLookup = async () => {
-    if (!address.trim()) return
-    setLoading(true)
-    setError(null)
-    setResult(null)
-    try {
-      const params = { address: address.trim() }
-      if (proposedUse.trim()) params.proposed_use = proposedUse.trim()
-      const response = await axios.get('http://127.0.0.1:8000/lookup', { params })
-      setResult(response.data)
-    } catch (err) {
-      setError(err.response?.data?.detail || 'Address not found. Check the address and try again.')
-    } finally {
-      setLoading(false)
+  const BLOCKED_TERMS = [
+    'nigger', 'nigga', 'faggot', 'chink', 'spic', 'kike', 'wetback', 'retard',
+    'dildo', 'penis', 'vagina',
+  ]
+
+  const validateProposedUse = (text) => {
+    const lower = text.toLowerCase().trim()
+    if (BLOCKED_TERMS.some(term => lower.includes(term))) {
+      return "Please enter a valid proposed use description."
+    }
+    return null
+  }
+const handleLookup = async () => {
+  if (!address.trim()) return
+
+  if (proposedUse.trim()) {
+    const validationError = validateProposedUse(proposedUse.trim())
+    if (validationError) {
+      setError(validationError)
+      return
     }
   }
+
+  setLoading(true)
+  setError(null)
+  setResult(null)
+  try {
+    const params = { address: address.trim() }
+    if (proposedUse.trim()) params.proposed_use = proposedUse.trim()
+    const response = await axios.get('http://127.0.0.1:8000/lookup', { params })
+    setResult(response.data)
+  } catch (err) {
+    setError(err.response?.data?.detail || 'Address not found. Check the address and try again.')
+  } finally {
+    setLoading(false)
+  }
+}
 
   const r = result
 
@@ -415,6 +436,13 @@ export default function App() {
                 <span style={styles.dataLabel}>FLUM Designation</span>
                 <span style={styles.dataValue}>{r.flum_designation}</span>
               </div>
+              {r.geocoded_fallback && (
+              <div style={{ fontSize: '11px', color: '#92400e', marginTop: '8px',
+                padding: '6px 8px', background: '#fffbeb', borderRadius: '3px',
+                border: '1px solid #fde68a' }}>
+                ⚠ Address not in DCAD — account number and FLUM unavailable. Zoning retrieved via coordinates.
+              </div>
+            )}
             </Card>
 
             {/* Zoning District */}
