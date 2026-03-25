@@ -3,16 +3,24 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.ssl_ import create_urllib3_context
 
 
-def geocode_address(address: str) -> tuple[float, float] | None:
+def geocode_address(address: str, city_key: str = None) -> tuple[float, float] | None:
     """
     Fallback geocoder — tries Census Bureau first, then Nominatim (OSM).
-    Returns (lat, lng) or None if both fail.
+    Validates returned coordinates are within the city's bounding box.
+    Returns (lat, lng) or None if both fail or coordinates are outside city bounds.
     """
     import urllib.parse
     import urllib.request
     import json
+    from app.config.cities import get_city
 
-    full_address = f"{address}, Garland, TX 75040"
+    city = get_city(city_key)
+    bounds = city["bounds"]  # [min_lat, max_lat, min_lng, max_lng]
+    full_address = f"{address}, {city['geocoder_suffix']}"
+
+    def in_bounds(lat, lng):
+        min_lat, max_lat, min_lng, max_lng = bounds
+        return min_lat <= lat <= max_lat and min_lng <= lng <= max_lng
 
     # ── Try 1: Census Bureau ─────────────────────────────────────────────
     try:
@@ -27,7 +35,9 @@ def geocode_address(address: str) -> tuple[float, float] | None:
         matches = data.get("result", {}).get("addressMatches", [])
         if matches:
             c = matches[0]["coordinates"]
-            return float(c["y"]), float(c["x"])
+            lat, lng = float(c["y"]), float(c["x"])
+            if in_bounds(lat, lng):
+                return lat, lng
     except Exception:
         pass
 
@@ -45,12 +55,13 @@ def geocode_address(address: str) -> tuple[float, float] | None:
         with urllib.request.urlopen(req, timeout=5) as r:
             data = json.loads(r.read())
         if data:
-            return float(data[0]["lat"]), float(data[0]["lon"])
+            lat, lng = float(data[0]["lat"]), float(data[0]["lon"])
+            if in_bounds(lat, lng):
+                return lat, lng
     except Exception:
         pass
 
     return None
-
 
 class LegacySSL(HTTPAdapter):
     def init_poolmanager(self, *args, **kwargs):
@@ -217,8 +228,17 @@ def detect_dt_subdistrict(lat: float, lng: float) -> str | None:
                 return code
     return None
 
+from app.config.cities import get_city
 
-def get_parcel_zoning(address: str, lat: float = None, lng: float = None):
+def get_parcel_zoning(address: str, lat: float = None, lng: float = None, city_key: str = None):
+    city = get_city(city_key)
+    gis = city["gis"]
+    
+    ADDRESS_URL = gis["address"]
+    ZONING_URL  = gis["zoning"]
+    FLUM_URL    = gis["flum"]
+    DAO_URL     = gis["dao"]
+    
     s = get_session()
 
     # Step 1: address to coordinates

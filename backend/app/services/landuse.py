@@ -140,18 +140,20 @@ SPLIT_USES = {
 
 STATUS_ORDER = ["prohibited", "requires_rezoning", "requires_sup", "special_standards", "permitted_by_right"]
 
+from app.config.cities import get_city
 
-def get_df():
+def get_df(city_key: str = None):
     global _df
     if _df is None:
-        _df = pd.read_csv("data/garland_land_use_matrix.csv", dtype=str).fillna("")
+        city = get_city(city_key)
+        _df = pd.read_csv(city["matrix_file"], dtype=str).fillna("")
     return _df
 
-
-def get_dt_df():
+def get_dt_df(city_key: str = None):
     global _dt_df
     if _dt_df is None:
-        _dt_df = pd.read_csv("data/garland_dt_land_use_matrix.csv", dtype=str).fillna("")
+        city = get_city(city_key)
+        _dt_df = pd.read_csv(city["dt_matrix_file"], dtype=str).fillna("")
     return _dt_df
 
 
@@ -315,7 +317,7 @@ def _check_split_use(proposed_use: str, district: str, lookup_col: str) -> dict 
 
     best_order = ["permitted_by_right", "special_standards", "requires_sup", "requires_rezoning", "prohibited"]
     best = min(statuses, key=lambda s: best_order.index(s) if s in best_order else 99)
-    
+
     result = {
         "match":    match_str,
         "category": results[0]["category"],

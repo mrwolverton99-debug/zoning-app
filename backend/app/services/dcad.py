@@ -61,19 +61,21 @@ def normalize_address(address: str) -> str:
 
     return " ".join(parts_out)
 
+from app.config.cities import get_city
 
-def get_df():
+def get_df(city_key: str = None):
     global _df
     if _df is None:
-        df = pd.read_csv("data/ACCOUNT_INFO.CSV", dtype=str)
-        df = df[df["PROPERTY_CITY"].str.upper() == "GARLAND (DALLAS CO)"]
+        from app.config.cities import get_city
+        city = get_city(city_key)
+        df = pd.read_csv(city["dcad_file"], dtype=str)
+        df = df[df["PROPERTY_CITY"].str.upper() == city["dcad_city_filter"]]
         df["full_address"] = (
             df["STREET_NUM"].str.strip() + " " +
             df["FULL_STREET_NAME"].str.strip()
         ).str.upper()
         _df = df
     return _df
-
 
 def _build_result(row, normalized: str) -> dict:
     return {
@@ -87,8 +89,8 @@ def _build_result(row, normalized: str) -> dict:
     }
 
 
-def lookup_parcel(address: str) -> dict | None:
-    df = get_df()
+def lookup_parcel(address: str, city_key: str = None) -> dict | None:
+    df = get_df(city_key)
     normalized = normalize_address(address)
 
     # 1. Exact match on normalized address

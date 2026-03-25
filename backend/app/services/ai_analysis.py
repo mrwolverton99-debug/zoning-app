@@ -97,6 +97,13 @@ DT (Downtown): Has five sub-districts: Downtown Historic (DH), Downtown Square (
 
 DIMENSIONAL STANDARDS:
 
+PERMIT SEQUENCING:
+- Existing structure, tenant finish-out or change of use: Building permit only (2-4 weeks)
+- New construction on undeveloped site: Site permit required first, then building permit. Site permit requires site plan review which can add 4-8 weeks before building permit.
+- Site permit triggers full landscaping, drainage, and infrastructure review per Chapter 3 and 4 of GDC
+- Always clarify in analysis whether the project involves new construction vs existing structure — the approval timeline differs significantly
+- If unclear from the applicant's description, note both paths
+
 SF-7: Min lot 7,000sf (6,650sf avg), Front 20' (15' curvilinear/cul-de-sac), Interior sides 6' each, Rear 10', Min dwelling 1,500sf, Min width 60', Min depth 100', Max coverage 45%, Max height 35'
 SF-5: Min lot 5,000sf (4,750sf avg), Front 20' (15' curv/cul), Interior sides 5' each, Rear 10', Min dwelling 1,500sf, Min width 55'/60' corner, Min depth 90', Max coverage 50%, Max height 35'
 SF-10: Min lot 10,000sf (9,500sf avg), Front 30' (25' curv/cul), Interior sides 7.5' each, Rear 10', Min dwelling 1,900sf, Min width 75', Min depth 100', Max coverage 45%, Max height 35'

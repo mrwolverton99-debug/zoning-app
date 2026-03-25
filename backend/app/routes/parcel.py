@@ -8,8 +8,9 @@ from app.services.ai_analysis import get_ai_analysis
 router = APIRouter()
 
 @router.get("/lookup")
-async def lookup(address: str, proposed_use: str = None):
-    parcel = await run_in_threadpool(lookup_parcel, address)
+async def lookup(address: str, proposed_use: str = None, city: str = "garland"):
+    parcel = await run_in_threadpool(lookup_parcel, address, city)
+    # ... pass city through to all service calls
     geocoded = False
     lat, lng = None, None
 
