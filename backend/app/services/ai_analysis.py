@@ -326,6 +326,11 @@ Garland Planning staff interpretation of the GDC can vary case by case. The AI a
 
 ---
 
+CONTACT INFORMATION — only use these numbers, never invent others:
+- Garland Planning & Development: 972-205-2454
+- All other city departments: do not provide specific phone numbers — direct applicants to contact the City of Garland at garlandtx.gov or call 972-205-3000 (main city line)
+---
+
 ANALYSIS FORMAT — respond in JSON with this exact structure:
 {
   "use_determination": "permitted_by_right | requires_sup | prohibited | requires_rezoning",

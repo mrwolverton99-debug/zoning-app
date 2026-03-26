@@ -180,6 +180,24 @@ SPLIT_USES = {
     "title loan":         ["Alternative Financial Establishment"],
     "pawn shop":          ["Pawn Shop"],
     "pawnshop":           ["Pawn Shop"],
+
+    # Personal services
+    "salon":              ["Personal Services"],
+    "hair salon":         ["Personal Services"],
+    "barber":             ["Personal Services"],
+    "beauty shop":        ["Personal Services"],
+    "nail salon":         ["Personal Services"],
+    "manicure":           ["Personal Services"],
+    "massage":            ["Personal Services"],
+    "tanning":            ["Personal Services"],
+    "spa":                ["Personal Services"],
+    "hair removal":       ["Personal Services"],
+    "permanent cosmetics":["Personal Services"],
+    "portrait studio":    ["Personal Services"],
+    "photography studio": ["Personal Services"],
+    "tailoring":          ["Personal Services"],
+    "alterations":        ["Personal Services"],
+    "weight loss":        ["Personal Services"],
 }
 
 ACCESSORY_TRIGGERS = {

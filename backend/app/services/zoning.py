@@ -275,7 +275,7 @@ def get_parcel_zoning(address: str, lat: float = None, lng: float = None, city_k
 
     z = zone_features[0]["attributes"]
     base_zone = z.get("BASE_ZONE") or ""
-    is_pd = "PD" in base_zone.upper()
+    is_pd = "PD" in base_zone.upper() or base_zone.upper() == "MIXED"
 
 # Step 3: coordinates to FLUM
     # Use a small buffer around the point to handle geocoder coordinate offset
