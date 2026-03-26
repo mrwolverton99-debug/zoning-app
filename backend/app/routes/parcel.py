@@ -50,6 +50,15 @@ async def lookup(address: str, proposed_use: str = None, city: str = "garland"):
     normalized = parcel.get("normalized_address", address)
     zoning = await run_in_threadpool(get_parcel_zoning, normalized, lat, lng, city)
 
+    # If GIS address lookup failed but we have DCAD parcel, try geocoder as fallback
+    if zoning is None and not geocoded:
+        coords = await run_in_threadpool(geocode_address, address, city)
+        if coords:
+            lat, lng = coords
+            zoning = await run_in_threadpool(get_parcel_zoning, normalized, lat, lng, city)
+            if zoning:
+                geocoded = True
+
     if zoning is None:
         raise HTTPException(
             status_code=404,
@@ -60,13 +69,14 @@ async def lookup(address: str, proposed_use: str = None, city: str = "garland"):
     dt_sub = zoning.get("dt_subdistrict")
     lookup_district = dt_sub if dt_sub else district
 
-    result = {**parcel, **zoning}
+    result = {**parcel, **zoning}   
 
     if geocoded:
         result["geocoded_fallback"] = True
         result["geocoded_note"] = (
-            "Address not in DCAD — account number unavailable. "
-            "Zoning and FLUM retrieved via coordinates."
+            "Zoning retrieved via coordinates — address format may differ from GIS records."
+            if result.get("account_num") else
+            "Address not in DCAD — account number unavailable. Zoning and FLUM retrieved via coordinates."
         )
 
     if not zoning["is_planned_development"] and district:
@@ -81,5 +91,12 @@ async def lookup(address: str, proposed_use: str = None, city: str = "garland"):
                     )
                 except Exception as e:
                     result["ai_analysis_error"] = str(e)
+
+    # Save to history (non-blocking)
+    try:
+        from app.services.history import save_lookup
+        await run_in_threadpool(save_lookup, address, result)
+    except Exception:
+        pass
 
     return result

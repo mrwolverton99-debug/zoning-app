@@ -221,27 +221,24 @@ def _get_dt_aggregate_uses():
     }
 
 
-def _lookup_use_status(use_name: str, lookup_col: str) -> tuple[str, str, str]:
-    """
-    Look up a single use name in both matrices.
-    Returns (status_val, category, source) where source is 'dt' or 'main'.
-    """
-    # Try DT matrix first
+def _lookup_use_status(use_name: str, lookup_col: str) -> tuple[str, str, str, str]:
+    """Returns (status_val, category, source, parking)"""
     dt = get_dt_df()
     rows = dt[dt["use_name"] == use_name]
     if not rows.empty and lookup_col in rows.columns:
         row = rows.iloc[0]
-        return row.get(lookup_col, ""), row["category"], "dt"
+        parking = row.get("parking", "") if "parking" in row.index else ""
+        return row.get(lookup_col, ""), row["category"], "dt", parking
 
-    # Try main matrix — if lookup_col is a DT sub-district code, fall back to "DT" column
     main = get_df()
     main_col = "DT" if lookup_col in DT_SUBDISTRICTS else lookup_col
     rows = main[main["use_name"] == use_name]
     if not rows.empty and main_col in rows.columns:
         row = rows.iloc[0]
-        return row.get(main_col, ""), row["category"], "main"
+        parking = row.get("parking", "") if "parking" in row.index else ""
+        return row.get(main_col, ""), row["category"], "main", parking
 
-    return "", "Unknown", "none"
+    return "", "Unknown", "none", ""
 
 
 def _status_label(status_val: str) -> str:
@@ -276,7 +273,7 @@ def _check_split_use(proposed_use: str, district: str, lookup_col: str) -> dict 
 
     results = []
     for use_name in matched_variants:
-        status_val, category, _ = _lookup_use_status(use_name, lookup_col)
+        status_val, category, _, parking = _lookup_use_status(use_name, lookup_col)
         label = _status_label(status_val)
         results.append({
             "use_name": use_name,
@@ -284,6 +281,7 @@ def _check_split_use(proposed_use: str, district: str, lookup_col: str) -> dict 
             "status":   label,
             "status_code": status_val,
             "definition": USE_DEFINITIONS.get(use_name, ""),
+            "parking": parking,
         })
 
     if not results:
@@ -403,7 +401,12 @@ def check_use(district: str, proposed_use: str) -> dict | None:
             "status":  "not_found",
             "message": f"No matching use type found for '{proposed_use}'",
         }
-
+    # After building result dict, add parking if available
+    parking = ""
+    if best_lookup_col in best_row.index:
+        parking = best_row.get("parking", "") if "parking" in best_row.index else ""
+    if parking:
+        result["parking"] = parking
     # Get status
     status_val = ""
     if best_lookup_col in best_row.index:
