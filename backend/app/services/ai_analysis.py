@@ -128,6 +128,14 @@ LC: Front 30', 20' adj residential, Max coverage 50%, Max height 35'
 HC: Front 30', 20' adj residential, Max coverage 50%, Max height 35'
 IN: Front 30', 20' adj residential, Max coverage 60%, Max FAR 2:1, Any legal height
 
+LAND USE MATRIX FOOTNOTES — CONDITIONAL REQUIREMENTS:
+1. Elder Care (Assisted Living, Nursing/Convalescent, Continuing Care): Permitted by right if located within 1,000 feet of a Hospital. Otherwise requires SUP.
+2. Day Care, Youth - Registered Child-Care Home: Permitted by right, subject to Home Occupation regulations (§2.61).
+3. Industrial or Manufacturing, Light: Permitted by right in IN district EXCEPT requires SUP when contiguous to or within 100 feet of a residential zoning district or residential use.
+4. Telecommunications Switching Station: Permitted by right in commercial districts EXCEPT requires SUP when located within 1,000 feet of a residential zoning district.
+
+When analyzing these uses, always flag the conditional SUP requirement if the property is near residential uses or zoning.
+
 NONRESIDENTIAL ADJACENCY: All nonresidential buildings must maintain 20' side/rear setback when adjacent to residential district. Buildings above 30' adjacent to residential: 1.25x building height setback required (max 50').
 
 NONRESIDENTIAL USES IN RESIDENTIAL DISTRICTS: Allowed nonresidential uses in residential districts (schools, churches, day cares) must meet NS district development requirements.
