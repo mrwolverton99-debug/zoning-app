@@ -138,6 +138,26 @@ SPLIT_USES = {
     "drive through":          ["Restaurant, Drive-Through", "Laundry, Drop-Off (with drive-through)", "Pharmacy (with drive-through)", "Drive-Through Service"],
 }
 
+ACCESSORY_TRIGGERS = {
+    "carport":            "accessory_structure",
+    "canopy":             "accessory_structure",
+    "porte cochere":      "accessory_structure",
+    "shed":               "accessory_structure",
+    "detached garage":    "accessory_structure",
+    "workshop":           "accessory_structure",
+    "accessory building": "accessory_structure",
+    "guest house":        "accessory_dwelling",
+    "accessory dwelling": "accessory_dwelling",
+    "adu":                "accessory_dwelling",
+    "pool":               "accessory_structure",
+    "swimming pool":      "accessory_structure",
+    "fence":              "fence",
+    "home occupation":    "home_occupation",
+    "home based business":"home_occupation",
+    "home business":      "home_occupation",
+    "work from home":     "home_occupation",
+}
+
 STATUS_ORDER = ["prohibited", "requires_rezoning", "requires_sup", "special_standards", "permitted_by_right"]
 
 from app.config.cities import get_city
@@ -346,9 +366,21 @@ def check_use(district: str, proposed_use: str) -> dict | None:
     if district in DT_SUBDISTRICTS:
         lookup_col = district
     elif district == "DT":
-        lookup_col = "DH"  # baseline fallback
+        lookup_col = "DH"
     else:
         lookup_col = district
+
+    # ── 0. Check accessory structure triggers ─────────────────────────────
+    proposed_lower = proposed_use.lower().strip()
+    for trigger, acc_type in ACCESSORY_TRIGGERS.items():
+        if trigger in proposed_lower:
+            return {
+                "match":         proposed_use,
+                "status":        "development_standard",
+                "category":      "Accessory Structures & Development Standards",
+                "message":       f"'{proposed_use}' is governed by GDC development standards, not the land use matrix. See analysis below.",
+                "accessory_type": acc_type,
+            }
 
     # ── 1. Check split uses first ─────────────────────────────────────────
     split_result = _check_split_use(proposed_use, district, lookup_col)

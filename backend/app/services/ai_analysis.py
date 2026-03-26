@@ -3,6 +3,7 @@ import json
 import os
 from dotenv import load_dotenv
 
+
 load_dotenv()
 
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
@@ -152,6 +153,7 @@ CARPORTS — RESIDENTIAL (§2.59):
 - Rear yard carport height: limited to peak of roof or 15' (whichever greater) for one-story; 15' max for two-story
 - Cannot be enclosed or converted to garage, living space, storage, or workroom
 - Siding may extend max 2' down from roof on open sides
+- Building permit required if over 20sf floor area (almost all carports qualify)
 
 CARPORTS — NONRESIDENTIAL (§2.60):
 - Cannot encroach into required front, side, or rear yard setbacks
@@ -160,6 +162,24 @@ CARPORTS — NONRESIDENTIAL (§2.60):
 - Columns must be architecturally integrated and match main building colors
 - Maximum 10 parking stalls under each roof structure
 - Must be at least 18' (post-to-post) from another parking structure without a landscaped island and large canopy tree between
+
+DETACHED GARAGES (§2.36 and §4.84):
+- Garage door face must be at least 20' from street/alley ROW the door faces (24' if facing interior lot line)
+- Must use one of: rear entry, J-drive (front entry), swing drive (side entry), or offset front entry set back 5'+ behind front building face
+- Detached garages are accessory buildings and follow §2.58 size/height limits
+- Building permit required if over 20sf
+- Cannot be sold separately from property
+
+FENCES (§4.101-4.109):
+- Permit required for all new fences except replacing existing compliant fence in same location/material/height not adjacent to street
+- Allowed materials: brick, stone, decorative metal/wrought iron, concrete, wood, chain-link
+- PROHIBITED: barbed wire (except AG and IN/HC at 6'+ height), razor wire, chicken wire/welded wire, plywood, electric fence (except residential rear yard with 24" setback inside another fence), corrugated metal (except IN/HC)
+- Front yard: no fence in required front yard EXCEPT ornamental wood/metal under 3.5' with open pattern, OR brick/masonry under 2.5'
+- Side/rear yard: fences allowed in required setbacks
+- Height limits: residential max 8', IN max 12', all other nonresidential max 10'
+- Gates: min 3' wide, 6'8" headroom; vehicular gates min 20' from property line (except SF/2F); cannot swing over ROW; fire lane gates need Knox locks
+- Fences prohibited in utility/drainage easements unless approved by Director of Engineering
+- Board of Adjustment may grant variance for undue hardship on setback/height/construction requirements
 
 HOME OCCUPATIONS (§2.61):
 - Home-based businesses are prohibited unless operating as a "no-impact home-based business"
@@ -259,6 +279,7 @@ FLUM CONSISTENCY — COMMON MISREADINGS TO AVOID:
 - Traditional Neighborhoods + CR/NS/NO on an arterial = likely CONSISTENT at intersections. Do not flag unless the site is mid-block on a local street.
 - Only flag FLUM inconsistency when the zoning district clearly exceeds what the FLUM allows — e.g. HC or IN zoning in Traditional or Compact Neighborhoods, or any commercial zoning on a local residential street.
 - A restaurant in CR zoning on an arterial within Compact Neighborhoods is NOT a red flag. It is a routine permitted use that needs no FLUM analysis at all.
+- For accessory structure questions (carports, sheds, fences, pools, guest houses), NEVER flag FLUM designation as a red flag. FLUM is irrelevant for residential accessory structures — it only matters for rezoning and SUP cases.
 
 COMP PLAN CONSISTENCY RULE: A rezoning from SF to commercial is unlikely to be supported unless the FLUM designates the area for commercial use OR the property is at an arterial intersection within a Traditional or Compact Neighborhoods designation (which allows limited convenience retail up to 3 acres). When recommending a rezoning path, recommend the LEAST INTENSE commercial district that permits the proposed use — working from NS (neighborhood scale, max 3 acres) → CR (community retail) → LC/HC (commercial/industrial service) → IN (industrial). Only recommend Downtown (DT) as a rezoning option if the property is actually located in or immediately adjacent to the Downtown district. Do not recommend DT for properties in residential neighborhoods far from downtown. Street classification matters — arterial streets (major divided roads) support commercial rezoning; local residential streets (two-lane neighborhood roads) do not.
 
@@ -290,6 +311,18 @@ COMPATIBILITY: Staff describes surrounding zoning and land uses in all four dire
 ---
 
 STREET CLASSIFICATION GUIDANCE: Local residential streets (Drive, Circle, Court, Place, Cove, Lane, Path, Way when in residential areas) are typically G or F classification and do not support commercial rezoning. Major arterials in Garland include: N/S Garland Ave, N/S Jupiter Rd, N/S Shiloh Rd, N/S Plano Rd, N/S Country Club Rd, W/E Buckingham Rd, W/E Kingsley Rd, W/E Oates Rd, W/E Miller Rd, W/E Walnut St, W/E Campbell Rd, Naaman Forest Blvd, Firewheel Pkwy, Belt Line Rd, Northwest Hwy, Broadway Blvd, Lavon Dr, and LBJ/I-30 frontage roads. When a property is on a clearly local residential street, state directly that the street classification does not support commercial rezoning and staff would likely deny on that basis alone.
+
+---
+
+CALIBRATION — INTERPRETATION AND UNCERTAINTY:
+Garland Planning staff interpretation of the GDC can vary case by case. The AI analysis should:
+- Give directionally accurate guidance without over-specifying outcomes
+- Avoid stating exact staff conditions that will be attached to an SUP — say "conditions will likely include hours, screening, and traffic mitigation" not specific values
+- Never claim to know exactly what staff will say — frame as "staff would likely" not "staff will"
+- For dimensional standards and landscaping triggers, note the requirement exists but recommend the applicant confirm with staff — especially for intersection/dual frontage situations where landscaping applies to both street frontages
+- When a site appears to be at a major intersection, note that landscaping and screening requirements may apply to multiple frontages and the applicant should confirm the full scope with Planning staff
+- Keep key considerations to 3-4 bullet points max — do not exhaustively list every possible issue
+- Keep next steps to 4 steps max — focus on the most important actions
 
 ---
 

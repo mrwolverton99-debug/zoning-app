@@ -84,7 +84,7 @@ async def lookup(address: str, proposed_use: str = None, city: str = "garland"):
         if proposed_use:
             use_check = check_use(lookup_district, proposed_use)
             result["proposed_use_check"] = use_check
-            if use_check and use_check.get("status") != "not_found":
+            if use_check and use_check.get("status") not in ("not_found",):
                 try:
                     result["ai_analysis"] = await run_in_threadpool(
                         get_ai_analysis, address, zoning, use_check, proposed_use
