@@ -59,8 +59,6 @@ USE_DEFINITIONS = {
 }
 
 # ── Split use triggers ────────────────────────────────────────────────────────
-# Maps normalized trigger phrases to lists of GDC use names to check together.
-# Order within each list: most common/restrictive first.
 SPLIT_USES = {
     # Auto repair
     "auto repair":            ["Automobile Repair, Major", "Automobile Repair, Minor"],
@@ -129,7 +127,7 @@ SPLIT_USES = {
     # Amusement
     "amusement":              ["Commercial Amusement, Indoor", "Commercial Amusement, Outdoor"],
     "entertainment":          ["Commercial Amusement, Indoor", "Commercial Amusement, Outdoor"],
-    # Bank + drive-through (primary + accessory use combo)
+    # Bank + drive-through
     "bank with drive":        ["Financial Institution", "Drive-Through Service"],
     "drive-through bank":     ["Financial Institution", "Drive-Through Service"],
     "drive through bank":     ["Financial Institution", "Drive-Through Service"],
@@ -137,69 +135,60 @@ SPLIT_USES = {
     "drive-through":          ["Restaurant, Drive-Through", "Laundry, Drop-Off (with drive-through)", "Pharmacy (with drive-through)", "Drive-Through Service"],
     "drive through":          ["Restaurant, Drive-Through", "Laundry, Drop-Off (with drive-through)", "Pharmacy (with drive-through)", "Drive-Through Service"],
     # Brewery/winery/distillery
-    "brewery":            ["Breweries/Wineries/Distilleries"],
-    "winery":             ["Breweries/Wineries/Distilleries"],
-    "distillery":         ["Breweries/Wineries/Distilleries"],
-    "breweries":          ["Breweries/Wineries/Distilleries"],
-    "taproom":            ["Breweries/Wineries/Distilleries"],
-    "craft beer":         ["Breweries/Wineries/Distilleries"],
-    "craft brewery":      ["Breweries/Wineries/Distilleries"],
-
-    # Makerspace — in main matrix, IN and UB only
-    "makerspace":         ["Makerspace (Hackerspace)"],
-    "hackerspace":        ["Makerspace (Hackerspace)"],
-
-    # Commercial drone delivery — new use added recently
-    "drone delivery":     ["Commercial Drone Delivery Hub (large)", "Commercial Drone Delivery Hub (small)"],
-    "drone hub":          ["Commercial Drone Delivery Hub (large)", "Commercial Drone Delivery Hub (small)"],
-
-    # Smoke shop — prohibited almost everywhere, good to catch
-    "smoke shop":         ["Smoke Shop"],
-    "vape shop":          ["Smoke Shop"],
-    "tobacco":            ["Smoke Shop"],
-
-    # Blood/plasma center
-    "plasma":             ["Commercial Blood, Plasma, Tissue and Cell Collection Center"],
-    "blood center":       ["Commercial Blood, Plasma, Tissue and Cell Collection Center"],
-    "donation center":    ["Commercial Blood, Plasma, Tissue and Cell Collection Center"],
-
-    # Sexually oriented business
-    "sexually oriented":  ["Sexually Oriented Business"],
-    "adult entertainment":["Sexually Oriented Business"],
-    "strip club":         ["Sexually Oriented Business"],
-    "adult bookstore":    ["Sexually Oriented Business"],
-
+    "brewery":                ["Breweries/Wineries/Distilleries"],
+    "winery":                 ["Breweries/Wineries/Distilleries"],
+    "distillery":             ["Breweries/Wineries/Distilleries"],
+    "breweries":              ["Breweries/Wineries/Distilleries"],
+    "taproom":                ["Breweries/Wineries/Distilleries"],
+    "craft beer":             ["Breweries/Wineries/Distilleries"],
+    "craft brewery":          ["Breweries/Wineries/Distilleries"],
+    # Makerspace
+    "makerspace":             ["Makerspace (Hackerspace)"],
+    "hackerspace":            ["Makerspace (Hackerspace)"],
+    # Drone delivery
+    "drone delivery":         ["Commercial Drone Delivery Hub (large)", "Commercial Drone Delivery Hub (small)"],
+    "drone hub":              ["Commercial Drone Delivery Hub (large)", "Commercial Drone Delivery Hub (small)"],
+    # Smoke shop
+    "smoke shop":             ["Smoke Shop"],
+    "vape shop":              ["Smoke Shop"],
+    "tobacco":                ["Smoke Shop"],
+    # Blood/plasma
+    "plasma":                 ["Commercial Blood, Plasma, Tissue and Cell Collection Center"],
+    "blood center":           ["Commercial Blood, Plasma, Tissue and Cell Collection Center"],
+    "donation center":        ["Commercial Blood, Plasma, Tissue and Cell Collection Center"],
+    # Sexually oriented
+    "sexually oriented":      ["Sexually Oriented Business"],
+    "adult entertainment":    ["Sexually Oriented Business"],
+    "strip club":             ["Sexually Oriented Business"],
+    "adult bookstore":        ["Sexually Oriented Business"],
     # Tattoo
-    "tattoo":             ["Tattooing/Body Piercing Establishment"],
-    "piercing":           ["Tattooing/Body Piercing Establishment"],
-    "body piercing":      ["Tattooing/Body Piercing Establishment"],
-
+    "tattoo":                 ["Tattooing/Body Piercing Establishment"],
+    "piercing":               ["Tattooing/Body Piercing Establishment"],
+    "body piercing":          ["Tattooing/Body Piercing Establishment"],
     # Alternative financial
-    "payday loan":        ["Alternative Financial Establishment"],
-    "check cashing":      ["Alternative Financial Establishment"],
-    "title loan":         ["Alternative Financial Establishment"],
-    "pawn shop":          ["Pawn Shop"],
-    "pawnshop":           ["Pawn Shop"],
-
+    "payday loan":            ["Alternative Financial Establishment"],
+    "check cashing":          ["Alternative Financial Establishment"],
+    "title loan":             ["Alternative Financial Establishment"],
+    "pawn shop":              ["Pawn Shop"],
+    "pawnshop":               ["Pawn Shop"],
     # Personal services
-    "salon":              ["Personal Services"],
-    "hair salon":         ["Personal Services"],
-    "barber":             ["Personal Services"],
-    "beauty shop":        ["Personal Services"],
-    "nail salon":         ["Personal Services"],
-    "manicure":           ["Personal Services"],
-    "massage":            ["Personal Services"],
-    "tanning":            ["Personal Services"],
-    "spa":                ["Personal Services"],
-    "hair removal":       ["Personal Services"],
-    "permanent cosmetics":["Personal Services"],
-    "portrait studio":    ["Personal Services"],
-    "photography studio": ["Personal Services"],
-    "tailoring":          ["Personal Services"],
-    "alterations":        ["Personal Services"],
-    "weight loss":        ["Personal Services"],
-
-    # Single family house
+    "salon":                  ["Personal Services"],
+    "hair salon":             ["Personal Services"],
+    "barber":                 ["Personal Services"],
+    "beauty shop":            ["Personal Services"],
+    "nail salon":             ["Personal Services"],
+    "manicure":               ["Personal Services"],
+    "massage":                ["Personal Services"],
+    "tanning":                ["Personal Services"],
+    "spa":                    ["Personal Services"],
+    "hair removal":           ["Personal Services"],
+    "permanent cosmetics":    ["Personal Services"],
+    "portrait studio":        ["Personal Services"],
+    "photography studio":     ["Personal Services"],
+    "tailoring":              ["Personal Services"],
+    "alterations":            ["Personal Services"],
+    "weight loss":            ["Personal Services"],
+    # Single family / residential
     "single family house":    ["Dwelling, Single-Family Detached"],
     "single family home":     ["Dwelling, Single-Family Detached"],
     "single family":          ["Dwelling, Single-Family Detached"],
@@ -217,7 +206,6 @@ SPLIT_USES = {
     "apartment complex":      ["Dwelling, Apartment"],
     "condo":                  ["Dwelling, Apartment"],
     "condominium":            ["Dwelling, Apartment"],
-
     "accessory dwelling":     ["Accessory Dwelling - Guest House", "Accessory Dwelling - Rental Unit"],
     "adu":                    ["Accessory Dwelling - Guest House", "Accessory Dwelling - Rental Unit"],
     "in-law suite":           ["Accessory Dwelling - Guest House"],
@@ -336,7 +324,7 @@ def _lookup_use_status(use_name: str, lookup_col: str) -> tuple[str, str, str, s
     rows = dt[dt["use_name"] == use_name]
     if not rows.empty and lookup_col in rows.columns:
         row = rows.iloc[0]
-        parking = row.get("parking", "") if "parking" in row.index else ""
+        parking = str(row.get("parking", "")) if "parking" in row.index else ""
         return row.get(lookup_col, ""), row["category"], "dt", parking
 
     main = get_df()
@@ -344,7 +332,7 @@ def _lookup_use_status(use_name: str, lookup_col: str) -> tuple[str, str, str, s
     rows = main[main["use_name"] == use_name]
     if not rows.empty and main_col in rows.columns:
         row = rows.iloc[0]
-        parking = row.get("parking", "") if "parking" in row.index else ""
+        parking = str(row.get("parking", "")) if "parking" in row.index else ""
         return row.get(main_col, ""), row["category"], "main", parking
 
     return "", "Unknown", "none", ""
@@ -365,10 +353,6 @@ def _worst_status(statuses: list[str]) -> str:
 
 
 def _check_split_use(proposed_use: str, district: str, lookup_col: str) -> dict | None:
-    """
-    If proposed_use matches a split-use trigger, look up all variants
-    and return a combined result. Returns None if no trigger matched.
-    """
     proposed_lower = proposed_use.lower().strip()
 
     matched_variants = None
@@ -400,7 +384,6 @@ def _check_split_use(proposed_use: str, district: str, lookup_col: str) -> dict 
     worst = _worst_status(statuses)
     all_same = len(set(statuses)) == 1
 
-    # Build human-readable variant summary
     variant_summary = " | ".join(
         f"{r['use_name']}: {r['status'].replace('_', ' ')}"
         for r in results
@@ -409,9 +392,7 @@ def _check_split_use(proposed_use: str, district: str, lookup_col: str) -> dict 
     if all_same:
         names = " and ".join(r["use_name"] for r in results)
         if len(results) == 1:
-            message = (
-                f"'{results[0]['use_name']}' is {worst.replace('_', ' ')} in {district}."
-            )
+            message = f"'{results[0]['use_name']}' is {worst.replace('_', ' ')} in {district}."
         else:
             message = (
                 f"All variants of '{proposed_use}' have the same status in {district}: "
@@ -437,7 +418,12 @@ def _check_split_use(proposed_use: str, district: str, lookup_col: str) -> dict 
         "variants": results,
     }
 
-    # Special note for drive-through accessory use combos
+    # Add parking from the best/first variant that has it
+    for r in results:
+        if r.get("parking"):
+            result["parking"] = r["parking"]
+            break
+
     if any(r["use_name"] == "Drive-Through Service" for r in results):
         result["drive_through_note"] = (
             "Drive-Through Service is an accessory use requiring a separate SUP in "
@@ -455,7 +441,6 @@ def check_use(district: str, proposed_use: str) -> dict | None:
         return None
     district = district.upper().strip()
 
-    # Determine lookup column
     if district in DT_SUBDISTRICTS:
         lookup_col = district
     elif district == "DT":
@@ -463,19 +448,19 @@ def check_use(district: str, proposed_use: str) -> dict | None:
     else:
         lookup_col = district
 
-    # ── 0. Check accessory structure triggers ─────────────────────────────
+    # ── 0. Accessory structure triggers ───────────────────────────────────
     proposed_lower = proposed_use.lower().strip()
     for trigger, acc_type in ACCESSORY_TRIGGERS.items():
         if trigger in proposed_lower:
             return {
-                "match":         proposed_use,
-                "status":        "development_standard",
-                "category":      "Accessory Structures & Development Standards",
-                "message":       f"'{proposed_use}' is governed by GDC development standards, not the land use matrix. See analysis below.",
+                "match":          proposed_use,
+                "status":         "development_standard",
+                "category":       "Accessory Structures & Development Standards",
+                "message":        f"'{proposed_use}' is governed by GDC development standards, not the land use matrix. See analysis below.",
                 "accessory_type": acc_type,
             }
 
-    # ── 1. Check split uses first ─────────────────────────────────────────
+    # ── 1. Split use check ────────────────────────────────────────────────
     split_result = _check_split_use(proposed_use, district, lookup_col)
     if split_result:
         if district == "DT" and lookup_col == "DH":
@@ -485,7 +470,7 @@ def check_use(district: str, proposed_use: str) -> dict | None:
             )
         return split_result
 
-# ── 2. Fuzzy match — search DT matrix then main matrix ────────────────
+    # ── 2. Fuzzy match ────────────────────────────────────────────────────
     import re
     search_terms = proposed_use.lower().strip().split()
 
@@ -533,13 +518,7 @@ def check_use(district: str, proposed_use: str) -> dict | None:
             "status":  "not_found",
             "message": f"No matching use type found for '{proposed_use}'",
         }
-    # After building result dict, add parking if available
-    parking = ""
-    if best_lookup_col in best_row.index:
-        parking = best_row.get("parking", "") if "parking" in best_row.index else ""
-    if parking:
-        result["parking"] = parking
-    # Get status
+
     status_val = ""
     if best_lookup_col in best_row.index:
         status_val = best_row.get(best_lookup_col, "")
@@ -561,6 +540,9 @@ def check_use(district: str, proposed_use: str) -> dict | None:
         "status":   label,
         "message":  message,
     }
+
+    if "parking" in best_row.index and best_row.get("parking"):
+        result["parking"] = str(best_row["parking"])
 
     definition = USE_DEFINITIONS.get(best_row["use_name"])
     if definition:
