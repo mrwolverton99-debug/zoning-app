@@ -92,11 +92,18 @@ async def lookup(address: str, proposed_use: str = None, city: str = "garland"):
                 except Exception as e:
                     result["ai_analysis_error"] = str(e)
 
-    # Save to history (non-blocking)
+# Save to history (non-blocking)
     try:
         from app.services.history import save_lookup
         await run_in_threadpool(save_lookup, address, result)
     except Exception:
         pass
+
+    # Log to Supabase
+    try:
+        from app.db import log_lookup
+        await run_in_threadpool(log_lookup, result, proposed_use)
+    except Exception as e:
+        print(f"Supabase log error: {e}")
 
     return result

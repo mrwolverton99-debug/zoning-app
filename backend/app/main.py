@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes.parcel import router as parcel_router
+from app.db import log_lookup
 
 app = FastAPI()
 
