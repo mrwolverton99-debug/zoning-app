@@ -274,15 +274,14 @@ Industry Centers: Cluster of trade and industry. May require substantial infrast
 
 Parks and Open Space: Parks, recreation, open space, natural areas, floodplains.
 
-FLUM CONSISTENCY — COMMON MISREADINGS TO AVOID:
-- Compact Neighborhoods + CR/NS/NO on an arterial = CONSISTENT. Do NOT flag as a red flag. Compact Neighborhoods explicitly allows non-residential uses up to 3 acres on arterials.
-- Traditional Neighborhoods + CR/NS/NO on an arterial = likely CONSISTENT at intersections. Do not flag unless the site is mid-block on a local street.
-- Only flag FLUM inconsistency when the zoning district clearly exceeds what the FLUM allows — e.g. HC or IN zoning in Traditional or Compact Neighborhoods, or any commercial zoning on a local residential street.
-- A restaurant in CR zoning on an arterial within Compact Neighborhoods is NOT a red flag. It is a routine permitted use that needs no FLUM analysis at all.
-- For accessory structure questions (carports, sheds, fences, pools, guest houses), NEVER flag FLUM designation as a red flag. FLUM is irrelevant for residential accessory structures — it only matters for rezoning and SUP cases.
-
-COMP PLAN CONSISTENCY RULE: A rezoning from SF to commercial is unlikely to be supported unless the FLUM designates the area for commercial use OR the property is at an arterial intersection within a Traditional or Compact Neighborhoods designation (which allows limited convenience retail up to 3 acres). When recommending a rezoning path, recommend the LEAST INTENSE commercial district that permits the proposed use — working from NS (neighborhood scale, max 3 acres) → CR (community retail) → LC/HC (commercial/industrial service) → IN (industrial). Only recommend Downtown (DT) as a rezoning option if the property is actually located in or immediately adjacent to the Downtown district. Do not recommend DT for properties in residential neighborhoods far from downtown. Street classification matters — arterial streets (major divided roads) support commercial rezoning; local residential streets (two-lane neighborhood roads) do not.
-
+FLUM CONSISTENCY — CRITICAL RULE:
+Compact Neighborhoods on a major arterial + ANY commercial zoning = CONSISTENT. NEVER flag as red flag. NEVER mention FLUM as a concern for any permitted or SUP use in CR, NS, CO, LC, HC, IN, UR, UB on an arterial street. 
+FLUM only matters for REZONING cases. If the parcel is already commercially zoned, FLUM compatibility is irrelevant and must not appear in red flags or key considerations.
+COMP PLAN CONSISTENCY RULE: A rezoning from SF to commercial is unlikely to be supported unless the FLUM designates the area for commercial use OR the property is at an arterial intersection within a Traditional or 
+Compact Neighborhoods designation (which allows limited convenience retail up to 3 acres). When recommending a rezoning path, recommend the LEAST INTENSE commercial district that permits the proposed 
+use — working from NS (neighborhood scale, max 3 acres) → CR (community retail) → LC/HC (commercial/industrial service) → IN (industrial). Only recommend Downtown (DT) as a rezoning option if the property 
+is actually located in or immediately adjacent to the Downtown district. Do not recommend DT for properties in residential neighborhoods far from downtown. Street classification matters — arterial streets 
+(major divided roads) support commercial rezoning; local residential streets (two-lane neighborhood roads) do not.
 ---
 
 STAFF REPORT ANALYTICAL PATTERNS:
@@ -381,7 +380,7 @@ PROPOSED USE (plain language description from applicant):
 LAND USE MATRIX RESULT:
 - Matched GDC Use Type: {use_check.get('match', 'No match found')}
 - Category: {use_check.get('category', '')}
-- Status in {district} ({zoning_data.get('dt_subdistrict') or 'sub-district unknown'}): {use_check.get('status', 'unknown')}
+- Status in {district_full} ({zoning_data.get('dt_subdistrict') or 'sub-district unknown'}): {use_check.get('status', 'unknown')}
 - Matrix Message: {use_check.get('message', '')}
 {_format_variants(use_check.get('variants'))}
 

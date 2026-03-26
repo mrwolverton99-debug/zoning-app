@@ -8,12 +8,14 @@ dt_matrix = [
     # RESIDENTIAL - ACCESSORY DWELLINGS
     ("Residential", "Dwelling, Accessory - Guest House", ["P","","P","P","P"]),
     ("Residential", "Dwelling, Accessory - Rental Unit", ["P","","P","P","P"]),
-    ("Residential", "Dwelling, Accessory - Guard/Manager/Caretaker", ["P","","P","P","p"]),
-    # ELDER CARE
-    ("Residential", "Elder Care - Independent Living", ["P","P","","",""]),
-    ("Residential", "Elder Care - Assisted Living", ["","P","","",""]),
-    ("Residential", "Elder Care - Nursing/Convalescent Care", ["","P","","",""]),
-    ("Residential", "Elder Care - Continuing Care", ["","P","","",""]),
+    ("Residential", "Dwelling, Accessory - Guard/Manager/Caretaker", ["P","","P","P","P"]),
+
+    # ELDER CARE — confirmed from PDF: DH DS U IR SC
+    ("Residential", "Elder Care - Independent Living", ["","","P","","P"]),
+    ("Residential", "Elder Care - Assisted Living", ["","","","","P"]),
+    ("Residential", "Elder Care - Nursing/Convalescent Care", ["","","","","P"]),
+    ("Residential", "Elder Care - Continuing Care", ["","","","","P"]),
+
     # HOUSEHOLD LIVING
     ("Residential", "Dwelling, Two-Family (duplex)", ["","","P","P",""]),
     ("Residential", "Dwelling, Multi-Family", ["P","S","P","","P"]),
@@ -21,6 +23,7 @@ dt_matrix = [
     ("Residential", "Dwelling, Single-Family Detached", ["","","P","P",""]),
     ("Residential", "Dwelling, Single-Family Attached (Townhouse)", ["","","P","P",""]),
     ("Residential", "Dwelling, Apartment", ["P","S","P","P","P"]),
+
     # ACCESSORY & TEMPORARY
     ("Accessory & Temporary", "Accessory Structure, Residential", ["P","P","P","P",""]),
     ("Accessory & Temporary", "Drive-In Service", ["","","","","S"]),
@@ -34,6 +37,7 @@ dt_matrix = [
     ("Accessory & Temporary", "Outside Storage, New Materials", ["","P","","","P"]),
     ("Accessory & Temporary", "Outside Storage, Used Materials", ["","S","","","S"]),
     ("Accessory & Temporary", "Seasonal Sales", ["","","","","S"]),
+
     # INSTITUTIONAL & EDUCATIONAL
     ("Institutional & Educational", "College or University", ["P","P","P","",""]),
     ("Institutional & Educational", "Convention Facility", ["","P","","","P"]),
@@ -47,16 +51,19 @@ dt_matrix = [
     ("Institutional & Educational", "School, Trade", ["","","S","",""]),
     ("Institutional & Educational", "School, Public", ["P","P","P","P",""]),
     ("Institutional & Educational", "School, Private, Religious or Charter", ["S","S","S","S",""]),
+
     # GOVERNMENT & HUMAN SERVICES
     ("Government & Human Services", "Charitable Boarding", ["S","S","S","S",""]),
     ("Government & Human Services", "Garden, Charitable", ["S","S","S","S",""]),
     ("Government & Human Services", "Garden, Civic", ["P","P","P","P",""]),
     ("Government & Human Services", "Post Office", ["","P","","","P"]),
     ("Government & Human Services", "Social Service Facility/Agency", ["P","P","P","",""]),
+
     # MEDICAL & HEALTH
     ("Medical & Health", "Hospital", ["","","","","P"]),
     ("Medical & Health", "Medical and Dental Office/Clinic", ["P","P","P","",""]),
     ("Medical & Health", "Mortuary/Funeral Home", ["P","P","P","",""]),
+
     # RECREATIONAL
     ("Recreational", "Athletic Events Facility, Indoor", ["","","S","",""]),
     ("Recreational", "Civic Club/Fraternal Lodge", ["P","P","P","",""]),
@@ -69,6 +76,7 @@ dt_matrix = [
     ("Recreational", "Reception Facility, Small Scale", ["P","P","P","",""]),
     ("Recreational", "Theater, Small Scale", ["P","P","P","",""]),
     ("Recreational", "Theater, Large Scale", ["","P","","",""]),
+
     # OFFICE, RETAIL & SERVICE
     ("Office, Retail & Service", "Antique Shop (indoors only)", ["P","P","P","P","P"]),
     ("Office, Retail & Service", "Bakery, Retail", ["P","P","P","P",""]),
@@ -100,10 +108,12 @@ dt_matrix = [
     ("Office, Retail & Service", "Restaurant", ["P","P","P","P","P"]),
     ("Office, Retail & Service", "Restaurant, Drive-Through", ["","","","","S"]),
     ("Office, Retail & Service", "Retail Store", ["P","P","P","P","P"]),
+    ("Office, Retail & Service", "Retail/Service", ["","S","P","","P"]),
     ("Office, Retail & Service", "Studio, Arts/Crafts", ["P","P","P","P","P"]),
     ("Office, Retail & Service", "Studio, Fitness or Performing Arts", ["P","S","P","P","P"]),
     ("Office, Retail & Service", "Used Goods, Retail Sales (Indoors)", ["P","P","P","P",""]),
     ("Office, Retail & Service", "Tattooing/Body Piercing Establishment", ["S","S","S","S",""]),
+
     # COMMERCIAL
     ("Commercial", "Bakery, Commercial", ["P","","","","P"]),
     ("Commercial", "Building/Garden Materials Sales & Storage (wholesale)", ["","","","","S"]),
@@ -116,18 +126,22 @@ dt_matrix = [
     ("Commercial", "Recording Studio/Media Production", ["P","","","","P"]),
     ("Commercial", "Small Engine/Lawn Equipment Rental & Repair (indoors)", ["P","","","","P"]),
     ("Commercial", "Veterinary Clinic, Small Animal (indoors only)", ["P","","","","P"]),
+
     # MOTOR VEHICLES
     ("Motor Vehicle", "Parking Lot or Garage, Commercial", ["P","P","P","",""]),
+
     # TRANSPORTATION
     ("Transportation", "Bus Stop", ["P","P","P","P","P"]),
     ("Transportation", "Helipad", ["","","S","",""]),
     ("Transportation", "Transit Station, Public", ["P","S","P","P",""]),
     ("Transportation", "Transportation Depot, Passenger", ["","S","","","S"]),
+
     # INDUSTRIAL
     ("Industrial", "Batching Plant, Temporary", ["P","P","P","P",""]),
     ("Industrial", "Breweries/Wineries/Distilleries", ["S","S","S","S",""]),
     ("Industrial", "Laboratory, Analytical or Research (indoor)", ["","","","","S"]),
     ("Industrial", "Warehouse, Office/Showroom (indoors only)", ["","","","","S"]),
+
     # UTILITY
     ("Utility", "Antenna, Commercial", ["*","*","*","*",""]),
     ("Utility", "Antenna, Private", ["P","P","P","P",""]),

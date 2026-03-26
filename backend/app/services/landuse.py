@@ -198,6 +198,33 @@ SPLIT_USES = {
     "tailoring":          ["Personal Services"],
     "alterations":        ["Personal Services"],
     "weight loss":        ["Personal Services"],
+
+    # Single family house
+    "single family house":    ["Dwelling, Single-Family Detached"],
+    "single family home":     ["Dwelling, Single-Family Detached"],
+    "single family":          ["Dwelling, Single-Family Detached"],
+    "detached house":         ["Dwelling, Single-Family Detached"],
+    "detached home":          ["Dwelling, Single-Family Detached"],
+    "new house":              ["Dwelling, Single-Family Detached"],
+    "new home":               ["Dwelling, Single-Family Detached"],
+    "house":                  ["Dwelling, Single-Family Detached"],
+    "home":                   ["Dwelling, Single-Family Detached"],
+    "townhouse":              ["Dwelling, Single-Family Attached (Townhouse)"],
+    "townhome":               ["Dwelling, Single-Family Attached (Townhouse)"],
+    "duplex":                 ["Dwelling, Two-Family (duplex)"],
+    "multifamily":            ["Dwelling, Multifamily"],
+    "apartment":              ["Dwelling, Apartment"],
+    "apartment complex":      ["Dwelling, Apartment"],
+    "condo":                  ["Dwelling, Apartment"],
+    "condominium":            ["Dwelling, Apartment"],
+
+    "accessory dwelling":     ["Accessory Dwelling - Guest House", "Accessory Dwelling - Rental Unit"],
+    "adu":                    ["Accessory Dwelling - Guest House", "Accessory Dwelling - Rental Unit"],
+    "in-law suite":           ["Accessory Dwelling - Guest House"],
+    "granny flat":            ["Accessory Dwelling - Guest House"],
+    "mobile home":            ["Dwelling, Mobile Home"],
+    "manufactured home":      ["Dwelling, Manufactured/HUD-Code Home"],
+    "modular home":           ["Dwelling, Industrialized Housing Unit"],
 }
 
 ACCESSORY_TRIGGERS = {
@@ -380,12 +407,16 @@ def _check_split_use(proposed_use: str, district: str, lookup_col: str) -> dict 
     )
 
     if all_same:
-        # Show all variant names joined, not just the first
         names = " and ".join(r["use_name"] for r in results)
-        message = (
-            f"All variants of '{proposed_use}' have the same status in {district}: "
-            f"{worst.replace('_', ' ')}."
-        )
+        if len(results) == 1:
+            message = (
+                f"'{results[0]['use_name']}' is {worst.replace('_', ' ')} in {district}."
+            )
+        else:
+            message = (
+                f"All variants of '{proposed_use}' have the same status in {district}: "
+                f"{worst.replace('_', ' ')}."
+            )
         match_str = names
     else:
         base = results[0]["use_name"].split(",")[0].split("(")[0].strip()
@@ -454,12 +485,19 @@ def check_use(district: str, proposed_use: str) -> dict | None:
             )
         return split_result
 
-    # ── 2. Fuzzy match — search DT matrix then main matrix ────────────────
+# ── 2. Fuzzy match — search DT matrix then main matrix ────────────────
+    import re
     search_terms = proposed_use.lower().strip().split()
 
     def score(use_name: str) -> int:
         n = use_name.lower()
-        return sum(1 for t in search_terms if t in n)
+        count = 0
+        for t in search_terms:
+            if re.search(r'\b' + re.escape(t) + r'\b', n):
+                count += 2
+            elif t in n:
+                count += 1
+        return count
 
     best_row = None
     best_score = 0
