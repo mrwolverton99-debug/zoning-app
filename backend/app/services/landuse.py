@@ -136,6 +136,50 @@ SPLIT_USES = {
     "bank drive":             ["Financial Institution", "Drive-Through Service"],
     "drive-through":          ["Restaurant, Drive-Through", "Laundry, Drop-Off (with drive-through)", "Pharmacy (with drive-through)", "Drive-Through Service"],
     "drive through":          ["Restaurant, Drive-Through", "Laundry, Drop-Off (with drive-through)", "Pharmacy (with drive-through)", "Drive-Through Service"],
+    # Brewery/winery/distillery
+    "brewery":            ["Breweries/Wineries/Distilleries"],
+    "winery":             ["Breweries/Wineries/Distilleries"],
+    "distillery":         ["Breweries/Wineries/Distilleries"],
+    "breweries":          ["Breweries/Wineries/Distilleries"],
+    "taproom":            ["Breweries/Wineries/Distilleries"],
+    "craft beer":         ["Breweries/Wineries/Distilleries"],
+    "craft brewery":      ["Breweries/Wineries/Distilleries"],
+
+    # Makerspace — in main matrix, IN and UB only
+    "makerspace":         ["Makerspace (Hackerspace)"],
+    "hackerspace":        ["Makerspace (Hackerspace)"],
+
+    # Commercial drone delivery — new use added recently
+    "drone delivery":     ["Commercial Drone Delivery Hub (large)", "Commercial Drone Delivery Hub (small)"],
+    "drone hub":          ["Commercial Drone Delivery Hub (large)", "Commercial Drone Delivery Hub (small)"],
+
+    # Smoke shop — prohibited almost everywhere, good to catch
+    "smoke shop":         ["Smoke Shop"],
+    "vape shop":          ["Smoke Shop"],
+    "tobacco":            ["Smoke Shop"],
+
+    # Blood/plasma center
+    "plasma":             ["Commercial Blood, Plasma, Tissue and Cell Collection Center"],
+    "blood center":       ["Commercial Blood, Plasma, Tissue and Cell Collection Center"],
+    "donation center":    ["Commercial Blood, Plasma, Tissue and Cell Collection Center"],
+
+    # Sexually oriented business
+    "sexually oriented":  ["Sexually Oriented Business"],
+    "adult entertainment":["Sexually Oriented Business"],
+    "strip club":         ["Sexually Oriented Business"],
+    "adult bookstore":    ["Sexually Oriented Business"],
+
+    # Tattoo
+    "tattoo":             ["Tattooing/Body Piercing Establishment"],
+    "piercing":           ["Tattooing/Body Piercing Establishment"],
+    "body piercing":      ["Tattooing/Body Piercing Establishment"],
+
+    # Alternative financial
+    "payday loan":        ["Alternative Financial Establishment"],
+    "check cashing":      ["Alternative Financial Establishment"],
+    "title loan":         ["Alternative Financial Establishment"],
+    "pawn shop":          ["Pawn Shop"],
+    "pawnshop":           ["Pawn Shop"],
 }
 
 ACCESSORY_TRIGGERS = {
