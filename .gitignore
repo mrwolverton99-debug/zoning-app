@@ -5,6 +5,7 @@ backend/**/__pycache__/
 backend/.env
 backend/data/ACCOUNT_INFO.CSV
 backend/data/LAND.CSV
+backend/data/gdc_watch.json
 frontend/node_modules/
 frontend/dist/
 frontend/.env
