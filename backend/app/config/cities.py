@@ -12,7 +12,7 @@ CITIES = {
         "bounds": [32.85, 33.05, -96.75, -96.55],
 
         # DCAD data file
-        "dcad_file": "data/ACCOUNT_INFO.CSV",
+        "dcad_file": "data/garland_parcels.csv",
         "dcad_city_filter": "GARLAND (DALLAS CO)",
 
         # Land use matrix CSVs
