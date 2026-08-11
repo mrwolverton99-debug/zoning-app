@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
+MODEL = "claude-sonnet-4-5"
 
 DISTRICT_NAMES = {
     'AG': 'Agricultural', 'SF-E': 'Single-Family Estate',
@@ -337,6 +338,23 @@ When a use is permitted by right with no SUP, rezoning, or variance needed:
 - Next steps: go get your permit, nothing else
 - Reserve the full analysis treatment for SUP, rezoning, PD, and variance cases where staff judgment actually matters
 
+SPECIAL STANDARDS (*) — CRITICAL:
+A "*" in the land use matrix means the use IS ALLOWED in the district subject
+to special development standards in the GDC. It is NOT prohibited and does NOT
+require rezoning or an SUP.
+
+When the matrix returns special_standards:
+- Set use_determination to "special_standards"
+- Do NOT recommend rezoning, do NOT suggest the use is unviable, do NOT
+  discuss staff denial — staff is not deciding whether to allow the use
+- Do NOT raise FLUM as a red flag; the use is already allowed under current zoning
+- Focus the analysis on which special standards apply and the permit path
+- Red flags should typically be empty
+
+NEVER contradict the land use matrix result provided to you. The matrix is
+authoritative. Your role is to explain the path forward given that result,
+not to re-decide whether the use is allowed.
+
 STRAIGHT REZONING: Staff evaluates how closely proposed district follows Envision Garland 2030. Development dependent on GDC standards. If approved, all GDC standards apply.
 
 PD REZONING: Each deviation from base zoning standards evaluated individually. Concept Plan required. Staff notes whether each requested deviation is supportable.
@@ -413,7 +431,7 @@ CONTACT INFORMATION — only use these numbers, never invent others:
 
 ANALYSIS FORMAT — respond in JSON with this exact structure:
 {
-  "use_determination": "permitted_by_right | requires_sup | prohibited | requires_rezoning",
+  "use_determination": "permitted_by_right | requires_sup | special_standards | prohibited | requires_rezoning",
   "use_match": "the GDC use category this most closely matches",
   "summary": "2-3 sentence plain language summary a contractor can understand immediately",
   "current_zoning_context": "what this district is intended for and whether the proposed use fits",
@@ -467,30 +485,51 @@ LAND USE MATRIX RESULT:
 
 Provide a complete pre-application analysis in the JSON format specified."""
 
-    response = requests.post(
-        "https://api.anthropic.com/v1/messages",
-        headers={
-            "x-api-key": ANTHROPIC_API_KEY,
-            "anthropic-version": "2023-06-01",
-            "content-type": "application/json"
-        },
-        json={
-            "model": "claude-sonnet-4-20250514",
-            "max_tokens": 2000,
-            "system": SYSTEM_PROMPT,
-            "messages": [
-                {"role": "user", "content": user_message}
-            ]
-        },
-        timeout=30
-    )
+    try:
+        response = requests.post(
+            "https://api.anthropic.com/v1/messages",
+            headers={
+                "x-api-key": ANTHROPIC_API_KEY,
+                "anthropic-version": "2023-06-01",
+                "content-type": "application/json"
+            },
+            json={
+                "model": MODEL,
+                "max_tokens": 2000,
+                "system": SYSTEM_PROMPT,
+                "messages": [
+                    {"role": "user", "content": user_message}
+                ]
+            },
+            timeout=30
+        )
+    except requests.RequestException as e:
+        raise RuntimeError(f"Anthropic API request failed: {e}") from e
+
+    # Surface API errors instead of dying on a missing 'content' key
+    if response.status_code != 200:
+        try:
+            err = response.json().get("error", {})
+            detail = f"{err.get('type', 'unknown')}: {err.get('message', '')}"
+        except ValueError:
+            detail = response.text[:300]
+        raise RuntimeError(
+            f"Anthropic API returned {response.status_code} for model '{MODEL}' — {detail}"
+        )
 
     data = response.json()
-    text = data["content"][0]["text"]
+
+    try:
+        text = data["content"][0]["text"]
+    except (KeyError, IndexError, TypeError):
+        raise RuntimeError(f"Unexpected Anthropic response shape: {str(data)[:300]}")
 
     if "```json" in text:
         text = text.split("```json")[1].split("```")[0].strip()
     elif "```" in text:
         text = text.split("```")[1].split("```")[0].strip()
 
-    return json.loads(text)
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError as e:
+        raise RuntimeError(f"Model returned non-JSON output: {e} — raw: {text[:300]}")

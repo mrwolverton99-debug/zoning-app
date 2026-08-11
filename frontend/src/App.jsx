@@ -407,7 +407,11 @@ export default function App() {
       setShowSuggestions(false)
       setResult(response.data)
     } catch (err) {
-      setError(err.response?.data?.detail || 'Address not found. Check the address and try again.')
+      if (err.response?.status === 429) {
+        setError('Too many lookups from this connection. Please try again in an hour.')
+      } else {
+        setError(err.response?.data?.detail || 'Address not found. Check the address and try again.')
+      }
     } finally {
       setLoading(false)
     }

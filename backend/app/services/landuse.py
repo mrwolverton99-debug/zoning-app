@@ -200,6 +200,12 @@ SPLIT_USES = {
     "home":                   ["Dwelling, Single-Family Detached"],
     "townhouse":              ["Dwelling, Single-Family Attached (Townhouse)"],
     "townhome":               ["Dwelling, Single-Family Attached (Townhouse)"],
+    "town house":             ["Dwelling, Single-Family Attached (Townhouse)"],
+    "town home":              ["Dwelling, Single-Family Attached (Townhouse)"],
+    "rowhouse":               ["Dwelling, Single-Family Attached (Townhouse)"],
+    "row house":              ["Dwelling, Single-Family Attached (Townhouse)"],
+    "attached home":          ["Dwelling, Single-Family Attached (Townhouse)"],
+    "attached house":         ["Dwelling, Single-Family Attached (Townhouse)"],
     "duplex":                 ["Dwelling, Two-Family (duplex)"],
     "multifamily":            ["Dwelling, Multifamily"],
     "apartment":              ["Dwelling, Apartment"],
@@ -239,12 +245,36 @@ STATUS_ORDER = ["prohibited", "requires_rezoning", "requires_sup", "special_stan
 
 from app.config.cities import get_city
 
+
+def _match_trigger(text: str, triggers) -> str | None:
+    """
+    Find the best matching trigger contained in `text`.
+
+    Triggers are checked longest-first so that specific terms beat generic
+    substrings — "townhome" must win over "home", "trade school" over
+    "school", "auto repair" over "repair".
+
+    Triggers of 3 characters or fewer require a whole-word match so they do
+    not fire inside longer words: "adu" must not match "adult", "spa" must
+    not match "space", "inn" must not match "winner".
+    """
+    import re
+    for trigger in sorted(triggers, key=len, reverse=True):
+        if len(trigger) <= 3:
+            if re.search(r'\b' + re.escape(trigger) + r'\b', text):
+                return trigger
+        elif trigger in text:
+            return trigger
+    return None
+
+
 def get_df(city_key: str = None):
     global _df
     if _df is None:
         city = get_city(city_key)
         _df = pd.read_csv(city["matrix_file"], dtype=str).fillna("")
     return _df
+
 
 def get_dt_df(city_key: str = None):
     global _dt_df
@@ -345,6 +375,25 @@ def _status_label(status_val: str) -> str:
     return "prohibited"
 
 
+def _status_message(use_name: str, label: str, district: str) -> str:
+    if label == "permitted_by_right":
+        return f"'{use_name}' appears permitted by right in {district}."
+    if label == "requires_sup":
+        return f"'{use_name}' requires a Specific Use Provision (SUP) in {district}."
+    if label == "special_standards":
+        return f"'{use_name}' is allowed in {district} subject to special standards. See GDC for details."
+    return f"'{use_name}' appears prohibited in {district}."
+
+
+def _status_text(label: str) -> str:
+    return {
+        "permitted_by_right": "permitted by right",
+        "requires_sup":       "requires a Specific Use Provision (SUP)",
+        "special_standards":  "subject to special standards",
+        "prohibited":         "prohibited",
+    }.get(label, label.replace("_", " "))
+
+
 def _worst_status(statuses: list[str]) -> str:
     for s in STATUS_ORDER:
         if s in statuses:
@@ -355,11 +404,8 @@ def _worst_status(statuses: list[str]) -> str:
 def _check_split_use(proposed_use: str, district: str, lookup_col: str) -> dict | None:
     proposed_lower = proposed_use.lower().strip()
 
-    matched_variants = None
-    for trigger, variants in SPLIT_USES.items():
-        if trigger in proposed_lower:
-            matched_variants = variants
-            break
+    trigger = _match_trigger(proposed_lower, SPLIT_USES)
+    matched_variants = SPLIT_USES[trigger] if trigger else None
 
     if not matched_variants:
         return None
@@ -392,11 +438,11 @@ def _check_split_use(proposed_use: str, district: str, lookup_col: str) -> dict 
     if all_same:
         names = " and ".join(r["use_name"] for r in results)
         if len(results) == 1:
-            message = f"'{results[0]['use_name']}' is {worst.replace('_', ' ')} in {district}."
+            message = _status_message(results[0]["use_name"], worst, district)
         else:
             message = (
-                f"All variants of '{proposed_use}' have the same status in {district}: "
-                f"{worst.replace('_', ' ')}."
+                f"All variants of '{proposed_use}' are {_status_text(worst)} "
+                f"in {district}."
             )
         match_str = names
     else:
@@ -450,15 +496,16 @@ def check_use(district: str, proposed_use: str) -> dict | None:
 
     # ── 0. Accessory structure triggers ───────────────────────────────────
     proposed_lower = proposed_use.lower().strip()
-    for trigger, acc_type in ACCESSORY_TRIGGERS.items():
-        if trigger in proposed_lower:
-            return {
-                "match":          proposed_use,
-                "status":         "development_standard",
-                "category":       "Accessory Structures & Development Standards",
-                "message":        f"'{proposed_use}' is governed by GDC development standards, not the land use matrix. See analysis below.",
-                "accessory_type": acc_type,
-            }
+    acc_trigger = _match_trigger(proposed_lower, ACCESSORY_TRIGGERS)
+    if acc_trigger:
+        acc_type = ACCESSORY_TRIGGERS[acc_trigger]
+        return {
+            "match":          proposed_use,
+            "status":         "development_standard",
+            "category":       "Accessory Structures & Development Standards",
+            "message":        f"'{proposed_use}' is governed by GDC development standards, not the land use matrix. See analysis below.",
+            "accessory_type": acc_type,
+        }
 
     # ── 1. Split use check ────────────────────────────────────────────────
     split_result = _check_split_use(proposed_use, district, lookup_col)

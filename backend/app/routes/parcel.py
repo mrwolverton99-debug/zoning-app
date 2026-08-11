@@ -4,6 +4,8 @@ from app.services.dcad import lookup_parcel
 from app.services.zoning import get_parcel_zoning, geocode_address
 from app.services.landuse import get_uses_for_district, check_use
 from app.services.ai_analysis import get_ai_analysis
+from app.limiter import limiter
+from fastapi import Request
 
 router = APIRouter()
 
@@ -23,7 +25,8 @@ async def suggest(q: str, city: str = "garland"):
 
 
 @router.get("/lookup")
-async def lookup(address: str, proposed_use: str = None, city: str = "garland"):
+@limiter.limit("15/hour")
+async def lookup(request: Request, address: str, proposed_use: str = None, city: str = "garland"):
     parcel = await run_in_threadpool(lookup_parcel, address, city)
     geocoded = False
     lat, lng = None, None
