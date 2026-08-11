@@ -1,0 +1,6 @@
+# Dev-only dependencies for backend/scripts/gdc_watcher.py — a standalone
+# utility that watches the GDC PDF for changes. Not imported by the running
+# app (backend/app/) and not installed on Render.
+-r requirements.txt
+playwright==1.58.0
+PyMuPDF==1.27.2.2

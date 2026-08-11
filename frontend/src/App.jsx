@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import axios from 'axios'
 import './App.css'
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'
 
 const NAVY = '#1a2744'
 const NAVY_LIGHT = '#243660'
@@ -378,7 +379,7 @@ export default function App() {
   }
   suggestTimer.current = setTimeout(async () => {
     try {
-      const resp = await axios.get('http://127.0.0.1:8000/suggest', {
+      const resp = await axios.get(`${API_URL}/suggest`, {
         params: { q: value.trim(), city: 'garland' }
       })
       setSuggestions(resp.data.suggestions || [])
@@ -407,7 +408,7 @@ export default function App() {
     try {
       const params = { address: address.trim() }
       if (proposedUse.trim()) params.proposed_use = proposedUse.trim()
-      const response = await axios.get('http://127.0.0.1:8000/lookup', {
+      const response = await axios.get(`${API_URL}/lookup`, {
         params: { ...params, city: 'garland' }
       })
       setShowSuggestions(false)

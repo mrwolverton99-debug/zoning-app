@@ -69,6 +69,21 @@ backend/data/garland_land_use_matrix.csv    generated main matrix w/ parking col
 backend/data/garland_dt_land_use_matrix.csv generated DT matrix
 ```
 
+## Data pipeline
+
+`ACCOUNT_INFO.CSV` is the full Dallas County DCAD dump (351MB, ~800k rows,
+every column DCAD publishes) — gitignored, kept locally only, never deployed.
+
+`backend/scripts/generate_parcels.py` filters it down to `garland_parcels.csv`
+(76,769 rows, 6.17MB, committed) — Garland rows only, and only the six columns
+`dcad.py` actually reads (`ACCOUNT_NUM`, `GIS_PARCEL_ID`, `STREET_NUM`,
+`FULL_STREET_NAME`, `PROPERTY_CITY`, `PROPERTY_ZIPCODE`).
+
+The running app reads only the filtered file (`cities.py`'s `dcad_file`
+points at `data/garland_parcels.csv`, not the raw dump). New cities follow
+the same pattern: drop the city's raw DCAD export locally, add a filter step
+for it, commit only the small filtered output.
+
 ## CRITICAL: matrix integrity
 
 This has caused significant rework before. Get it right.
