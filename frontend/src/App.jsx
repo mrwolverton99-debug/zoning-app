@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import axios from 'axios'
 import './App.css'
 
@@ -253,12 +253,12 @@ analysisText: {
     marginBottom: '8px',
   },
   disclaimer: {
-    background: GREEN_LIGHT,
-    border: `1px solid #86efac`,
+    background: '#f5f5f5',
+    border: `1px solid #d0d0d0`,
     borderRadius: '3px',
     padding: '10px 14px',
     fontSize: '12px',
-    color: '#166534',
+    color: '#555',
     gridColumn: '1 / -1',
   },
   errorBox: {
@@ -347,6 +347,12 @@ export default function App() {
   const [loading, setLoading] = useState(false)
   const [suggestions, setSuggestions] = useState([])
   const [showSuggestions, setShowSuggestions] = useState(false)
+
+  useEffect(() => {
+    document.title = result?.normalized_address
+      ? `${result.normalized_address} — Garland Zoning Analysis`
+      : 'Garland Zoning Pre-Application Analysis'
+  }, [result])
 
   const BLOCKED_TERMS = [
     'nigger', 'nigga', 'faggot', 'chink', 'spic', 'kike', 'wetback', 'retard',
@@ -767,7 +773,7 @@ const handlePrint = () => {
               </div>
             )}
             <div style={styles.disclaimer}>
-              ✓ Results appear subject to staff review and do not constitute zoning approval or compliance
+              <span style={{ color: '#777' }}>✓</span> Results appear subject to staff review and do not constitute zoning approval or compliance
               determination. Verify all information with Garland Planning & Development staff before
               submitting permit applications. 972-205-2454.
             </div>

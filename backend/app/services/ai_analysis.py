@@ -480,6 +480,7 @@ LAND USE MATRIX RESULT:
 - Matched GDC Use Type: {use_check.get('match', 'No match found')}
 - Category: {use_check.get('category', '')}
 - Status in {district_full} ({zoning_data.get('dt_subdistrict') or 'sub-district unknown'}): {use_check.get('status', 'unknown')}
+- Parking Requirement (authoritative — use this exact value, do not substitute): {use_check.get('parking') or 'not provided'}
 - Matrix Message: {use_check.get('message', '')}
 {_format_variants(use_check.get('variants'))}
 
