@@ -697,6 +697,12 @@ const handlePrint = () => {
               </Card>
             )}
 
+            {r.ai_analysis_error && (
+              <div style={{ ...styles.errorBox, ...styles.gridFull }}>
+                ⚠ AI analysis unavailable: {r.ai_analysis_error}. Parcel and land use matrix results above are unaffected — verify the proposed use directly with Garland Planning staff.
+              </div>
+            )}
+
             {r.ai_analysis && (
               <Card title="Pre-Application Staff Analysis" fullWidth accent={ACCENT}>
                 <div style={styles.grid} className="results-grid">
