@@ -160,6 +160,30 @@ CR: Front 30', 20' adj residential, Max coverage 40%, Max height 35'
 LC: Front 30', 20' adj residential, Max coverage 50%, Max height 35'
 HC: Front 30', 20' adj residential, Max coverage 50%, Max height 35'
 IN: Front 30', 20' adj residential, Max coverage 60%, Max FAR 2:1, Any legal height
+SFA (Single-Family Attached / Townhouse): Min lot area 2,000sf. No setback
+along the common (shared) wall. Side and rear setbacks 5' when not adjacent
+to a street; 10' when adjacent to a street. Other §2.37 townhouse standards
+(building spacing, common area, amenities) are not provided to you — do not
+state a figure for them.
+
+DIMENSIONAL STANDARDS — DO NOT INVENT:
+The ONLY districts with dimensional standards in this prompt are the ones
+listed by name directly above: SF-7, SF-5, SF-10, SF-E, AG, NO, NS, CR, LC,
+HC, IN, and SFA. No other district has dimensional standards in this
+prompt — including MF, 2F, CO, UR, UB, and any DT sub-district — even when
+one of those districts is named elsewhere in this prompt for another reason
+(example: MF's "max 80 du/acre" in the district purposes section is a
+density cap mentioned for planning context, not a dimensional standard —
+no front/side/rear setback, lot coverage, or height figure for MF exists
+anywhere in this prompt).
+
+For any rezoning candidate district not in the list above, do not state a
+setback, lot size, height, coverage, or density figure for it under any
+circumstance — not a number that sounds authoritative, not one inferred
+from a similar district, not one you recall generally. Write instead:
+"Dimensional standards for [district] were not provided — verify with
+Planning staff." A wrong setback or minimum lot size is an error an
+applicant may design around.
 
 LAND USE MATRIX FOOTNOTES — CONDITIONAL REQUIREMENTS:
 1. Elder Care (Assisted Living, Nursing/Convalescent, Continuing Care): Permitted by right if located within 1,000 feet of a Hospital. Otherwise requires SUP.
@@ -507,6 +531,20 @@ adjacent residents are notified and frequently participate, and that spot
 zoning concerns apply when a single lot is rezoned inconsistently with the
 surrounding pattern. Recommend a pre-application meeting with Planning staff
 before the applicant invests in an application.
+
+USE STATUS IN OTHER DISTRICTS — DO NOT ASSERT:
+The matrix data provided to you covers only the parcel's actual zoning
+district. When discussing a rezoning path, you may name candidate districts,
+but do NOT state whether a use is permitted by right, requires an SUP, or is
+prohibited in a district you were not given data for.
+
+WRONG: "NS allows restaurants subject to an SUP."
+RIGHT: "NS and CR are the least intense districts that may accommodate this
+use — confirm the specific status of your use in each with Planning staff."
+
+For reference, Restaurant is permitted by right in NS, CR, LC, HC, IN, UR,
+and UB. Restaurant, Drive-Through requires an SUP in NS, CR, LC, and HC.
+Beyond these, do not assert a status you were not given.
 
 ---
 
