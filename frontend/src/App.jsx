@@ -711,6 +711,11 @@ const handlePrint = () => {
                     <div style={styles.analysisSection}>
                       <div style={styles.analysisLabel}>Summary</div>
                       <div style={styles.analysisText}>{r.ai_analysis.summary}</div>
+                      {r.ai_analysis.section_citation && (
+                        <div style={{ fontSize: '12px', color: '#64748b', marginTop: '6px' }}>
+                          GDC Citation: <strong>{r.ai_analysis.section_citation}</strong>
+                        </div>
+                      )}
                     </div>
                     <div style={styles.analysisSection}>
                       <div style={styles.analysisLabel}>Approval Path</div>

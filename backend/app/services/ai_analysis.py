@@ -1,3 +1,4 @@
+import re
 import requests
 import json
 import os
@@ -8,6 +9,37 @@ load_dotenv()
 
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 MODEL = "claude-sonnet-4-5"
+
+# The model has repeatedly transposed digits in this number despite prompt
+# instructions. Don't trust generation for it — force-correct any lookalike
+# after the fact instead of hoping the wording works this time.
+PLANNING_PHONE = "972-205-2454"
+_PHONE_PATTERN = re.compile(r"972-205-\d{4}")
+
+# Section citations the model is reliably given but reliably fails to
+# reproduce in prose. Compute deterministically from the matched use name
+# instead of trusting the model to echo prompt text correctly.
+SPECIAL_STANDARDS_CITATIONS = {
+    "Dwelling, Apartment": "§2.52(A)(40)",
+    "Dwelling, Multifamily": "§2.52(A)(40)",
+    "Dwelling, Live/Work": "§2.52(A)(40)",
+}
+
+
+def _correct_phone_numbers(obj):
+    if isinstance(obj, dict):
+        return {k: _correct_phone_numbers(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [_correct_phone_numbers(v) for v in obj]
+    if isinstance(obj, str):
+        return _PHONE_PATTERN.sub(PLANNING_PHONE, obj)
+    return obj
+
+
+def _section_citation(use_check: dict) -> str | None:
+    if not use_check or use_check.get("status") != "special_standards":
+        return None
+    return SPECIAL_STANDARDS_CITATIONS.get(use_check.get("match") or "", "§2.52")
 
 DISTRICT_NAMES = {
     'AG': 'Agricultural', 'SF-E': 'Single-Family Estate',
@@ -362,6 +394,11 @@ governs a special-standards use, say "verify the applicable special standards
 with Planning staff" — do NOT invent a section number and do NOT tell the
 applicant to obtain a specific section.
 
+When a section number IS provided to you in this prompt or in the matrix
+data, cite it directly and state the applicable standards. The restriction
+above is against inventing citations, not against using the ones you are
+given.
+
 A "*" in the land use matrix means: see Chapter 2, Section 2.52 for special
 standards. §2.52 contains the special standards for many uses across the
 matrix, organized by subsection. Cite the specific subsection only when it is
@@ -468,7 +505,11 @@ All site-specific conditions must be framed as things the applicant needs to ver
 ---
 
 CONTACT INFORMATION — only use these numbers, never invent others:
-- Garland Planning & Development: 972-205-2454
+- Garland Planning & Development: 972-205-2454 — this is the ONLY valid number
+  for Planning & Development. Reproduce it exactly digit for digit: 972-205-2454.
+  972-205-3454 is a known INCORRECT variant and must NEVER appear in your output
+  under any circumstances. Before including this number, verify it reads
+  972-205-2454, not 972-205-3454.
 - All other city departments: do not provide specific phone numbers — direct applicants to contact the City of Garland at garlandtx.gov or call 972-205-3000 (main city line)
 ---
 
@@ -484,6 +525,7 @@ ANALYSIS FORMAT — respond in JSON with this exact structure:
   "red_flags": ["issues that would complicate or likely defeat the application — empty array if none"],
   "likely_staff_position": "what staff would likely recommend and why — firm recommendation, not neutral",
   "next_steps": ["what the applicant should do next in order"],
+  "section_citation": "the exact GDC section citation if one is provided to you for this use — otherwise null. Do not guess one.",
   "disclaimer": "This analysis appears subject to staff review and does not constitute an official zoning determination. Verify all findings with Garland Planning and Development staff before submitting permit applications."
 }
 
@@ -505,6 +547,8 @@ def get_ai_analysis(address: str, zoning_data: dict, use_check: dict, proposed_u
     if dt_sub:
         district_full = f"DT — {dt_sub} Sub-District (Downtown)"
 
+    citation = _section_citation(use_check)
+
     user_message = f"""Analyze this proposed project and provide a pre-application zoning assessment.
 
 PROPERTY INFORMATION:
@@ -524,6 +568,7 @@ LAND USE MATRIX RESULT:
 - Category: {use_check.get('category', '')}
 - Status in {district_full} ({zoning_data.get('dt_subdistrict') or 'sub-district unknown'}): {use_check.get('status', 'unknown')}
 - Parking Requirement (authoritative — use this exact value, do not substitute): {use_check.get('parking') or 'not provided'}
+- Applicable Special Standards Citation (authoritative — cite this exact section if provided; if "not applicable", do not cite a section number): {citation or 'not applicable'}
 - Matrix Message: {use_check.get('message', '')}
 {_format_variants(use_check.get('variants'))}
 
@@ -574,6 +619,13 @@ Provide a complete pre-application analysis in the JSON format specified."""
         text = text.split("```")[1].split("```")[0].strip()
 
     try:
-        return json.loads(text)
+        result = json.loads(text)
     except json.JSONDecodeError as e:
         raise RuntimeError(f"Model returned non-JSON output: {e} — raw: {text[:300]}")
+
+    # Don't trust the model to reproduce these correctly — enforce them.
+    result = _correct_phone_numbers(result)
+    if citation:
+        result["section_citation"] = citation
+
+    return result
