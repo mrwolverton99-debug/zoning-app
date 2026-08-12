@@ -33,14 +33,22 @@ def log_lookup(result: dict, proposed_use: str = None):
     except Exception as e:
         print(f"Supabase log error: {e}")
 
-def log_feedback(address: str, base_zone: str, proposed_use: str, issue: str):
-    try:
-        db = get_db()
-        db.table("feedback").insert({
-            "address": address,
-            "base_zone": base_zone,
-            "proposed_use": proposed_use,
-            "issue_description": issue,
-        }).execute()
-    except Exception as e:
-        print(f"Supabase feedback error: {e}")
+def log_feedback(
+    issue: str,
+    address: str = None,
+    city: str = None,
+    proposed_use: str = None,
+    base_zone: str = None,
+    matched_use: str = None,
+    reply_email: str = None,
+):
+    db = get_db()
+    db.table("feedback").insert({
+        "address": address,
+        "city": city,
+        "proposed_use": proposed_use,
+        "base_zone": base_zone,
+        "matched_use": matched_use,
+        "issue_description": issue,
+        "reply_email": reply_email,
+    }).execute()

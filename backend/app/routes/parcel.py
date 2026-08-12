@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from fastapi.concurrency import run_in_threadpool
+from pydantic import BaseModel, Field
 from app.services.dcad import lookup_parcel
 from app.services.zoning import get_parcel_zoning, geocode_address
 from app.services.landuse import get_uses_for_district, check_use
@@ -8,6 +9,16 @@ from app.limiter import limiter
 from fastapi import Request
 
 router = APIRouter()
+
+
+class FeedbackRequest(BaseModel):
+    issue: str = Field(..., min_length=1, max_length=2000)
+    address: str | None = None
+    city: str | None = None
+    proposed_use: str | None = None
+    base_zone: str | None = None
+    matched_use: str | None = None
+    reply_email: str | None = Field(default=None, max_length=320)
 
 @router.get("/suggest")
 async def suggest(q: str, city: str = "garland"):
@@ -103,3 +114,24 @@ async def lookup(request: Request, address: str, proposed_use: str = None, city:
         print(f"Supabase log error: {e}")
 
     return result
+
+
+@router.post("/feedback")
+@limiter.limit("5/hour")
+async def submit_feedback(request: Request, body: FeedbackRequest):
+    from app.db import log_feedback
+    try:
+        await run_in_threadpool(
+            log_feedback,
+            issue=body.issue.strip(),
+            address=body.address,
+            city=body.city,
+            proposed_use=body.proposed_use,
+            base_zone=body.base_zone,
+            matched_use=body.matched_use,
+            reply_email=body.reply_email,
+        )
+    except Exception as e:
+        print(f"Supabase feedback error: {e}")
+        raise HTTPException(status_code=502, detail="Couldn't save your feedback. Please try again.")
+    return {"status": "ok"}

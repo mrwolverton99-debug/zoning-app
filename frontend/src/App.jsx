@@ -421,6 +421,118 @@ function CollapsibleUseList({ items, color, bullet, initialShow = 5 }) {
   )
 }
 
+function FeedbackModal({ context, onClose }) {
+  const [issue, setIssue] = useState('')
+  const [email, setEmail] = useState('')
+  const [status, setStatus] = useState('idle') // idle | submitting | success | error
+  const [errorMsg, setErrorMsg] = useState('')
+
+  const submit = async () => {
+    if (!issue.trim()) return
+    setStatus('submitting')
+    setErrorMsg('')
+    try {
+      await axios.post(`${API_URL}/feedback`, {
+        issue: issue.trim(),
+        reply_email: email.trim() || null,
+        address: context.address || null,
+        city: context.city || null,
+        proposed_use: context.proposedUse || null,
+        base_zone: context.baseZone || null,
+        matched_use: context.matchedUse || null,
+      })
+      setStatus('success')
+      setTimeout(onClose, 1600)
+    } catch (err) {
+      setStatus('error')
+      if (err.response?.status === 429) {
+        setErrorMsg('Too many reports from this connection. Please try again in an hour.')
+      } else {
+        setErrorMsg(err.response?.data?.detail || "Couldn't send feedback — please try again.")
+      }
+    }
+  }
+
+  return (
+    <div
+      onMouseDown={onClose}
+      style={{
+        position: 'fixed', inset: 0, background: 'rgba(15,23,42,0.5)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '16px',
+      }}
+    >
+      <div
+        onMouseDown={e => e.stopPropagation()}
+        style={{
+          background: 'white', borderRadius: '5px', borderTop: `3px solid ${NAVY}`,
+          width: '100%', maxWidth: '440px', boxShadow: '0 8px 24px rgba(0,0,0,0.25)',
+        }}
+      >
+        <div style={{ ...styles.cardHeader, borderRadius: '5px 5px 0 0' }}>
+          <span style={styles.cardTitle}>Report an Issue</span>
+          <button
+            onClick={onClose}
+            style={{ background: 'none', border: 'none', color: 'white', fontSize: '16px', cursor: 'pointer', lineHeight: 1 }}
+            aria-label="Close"
+          >
+            ✕
+          </button>
+        </div>
+        <div style={{ padding: '18px' }}>
+          {status === 'success' ? (
+            <div style={{ ...styles.dataValue, color: GREEN, textAlign: 'center', padding: '12px 0', fontSize: '14px' }}>
+              ✓ Thanks — your report was sent.
+            </div>
+          ) : (
+            <>
+              <label style={styles.searchLabel}>What's wrong? *</label>
+              <textarea
+                autoFocus
+                value={issue}
+                onChange={e => setIssue(e.target.value)}
+                placeholder="Describe what looks incorrect..."
+                rows={4}
+                style={{ ...styles.input, resize: 'vertical', fontFamily: 'inherit', marginBottom: '12px' }}
+              />
+              <label style={styles.searchLabel}>Email (optional — if you'd like a reply)</label>
+              <input
+                type="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                placeholder="you@example.com"
+                style={{ ...styles.input, marginBottom: '12px' }}
+              />
+              {(context.address || context.baseZone) && (
+                <div style={{ fontSize: '11px', color: '#94a3b8', marginBottom: '12px' }}>
+                  Attached: {[context.address, context.baseZone, context.proposedUse].filter(Boolean).join(' · ')}
+                </div>
+              )}
+              {status === 'error' && (
+                <div style={{ ...styles.errorBox, marginBottom: '12px', fontSize: '13px' }}>⚠ {errorMsg}</div>
+              )}
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
+                <button
+                  onClick={onClose}
+                  style={{ padding: '9px 16px', background: 'none', color: '#64748b', border: `1px solid ${BORDER}`, borderRadius: '3px', fontSize: '13px', cursor: 'pointer' }}
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={submit}
+                  disabled={!issue.trim() || status === 'submitting'}
+                  style={{ ...styles.button, padding: '9px 18px', opacity: (!issue.trim() || status === 'submitting') ? 0.6 : 1 }}
+                >
+                  {status === 'submitting' ? 'Sending...' : 'Send Report'}
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function Card({ title, children, accent, fullWidth, badge }) {
   return (
     <div style={{ ...styles.card, ...(fullWidth ? styles.gridFull : {}) }}>
@@ -441,6 +553,7 @@ export default function App() {
   const [loading, setLoading] = useState(false)
   const [suggestions, setSuggestions] = useState([])
   const [showSuggestions, setShowSuggestions] = useState(false)
+  const [feedbackOpen, setFeedbackOpen] = useState(false)
 
   useEffect(() => {
     document.title = result?.normalized_address
@@ -519,18 +632,6 @@ export default function App() {
 
 const handlePrint = () => {
     window.print()
-  }
-
-  const handleReport = (r) => {
-    const subject = encodeURIComponent(`Zoning App Issue — ${r.street_num || ''} ${r.street_name || ''}`.trim())
-    const body = encodeURIComponent(
-      `Address: ${r.street_num || ''} ${r.street_name || ''}\n` +
-      `Zoning: ${r.base_zone || ''}\n` +
-      `Sub-district: ${r.dt_subdistrict || 'N/A'}\n` +
-      `Proposed use: ${proposedUse || 'N/A'}\n` +
-      `\nDescribe the issue:\n`
-    )
-    window.open(`mailto:mwolverton@garlandtx.gov?subject=${subject}&body=${body}`)
   }
 
   const r = result
@@ -917,7 +1018,7 @@ const handlePrint = () => {
                   🖨 Print this analysis
                 </button>
                 <button
-                  onClick={() => handleReport(r)}
+                  onClick={() => setFeedbackOpen(true)}
                   style={{ background: 'none', border: 'none', color: '#94a3b8', fontSize: '12px',
                     cursor: 'pointer', textDecoration: 'underline' }}
                 >
@@ -933,6 +1034,19 @@ const handlePrint = () => {
           </div>
         )}
       </main>
+
+      {feedbackOpen && (
+        <FeedbackModal
+          context={{
+            address: r ? `${r.street_num || ''} ${r.street_name || ''}`.trim() : '',
+            city: 'garland',
+            proposedUse: proposedUse.trim() || null,
+            baseZone: r?.base_zone || null,
+            matchedUse: r?.proposed_use_check?.match || null,
+          }}
+          onClose={() => setFeedbackOpen(false)}
+        />
+      )}
     </div>
   )
 }
