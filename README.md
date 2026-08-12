@@ -1,6 +1,6 @@
 Zoning Pre-Application Analysis Tool
 
-Live demo → zoning-app-tawny.vercel.app
+Live demo → zonepath.app
 
 Enter a Garland, TX property address and a proposed use. Get back the zoning district, whether the use is permitted by right / requires a Specific Use Provision / is prohibited, the parking requirement, and an AI-generated pre-application analysis written the way a city planner would write it.
 
