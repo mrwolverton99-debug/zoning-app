@@ -11,3 +11,4 @@ frontend/dist/
 frontend/.env
 frontend/.env.local
 node_modules/
+.claude/settings.local.json
