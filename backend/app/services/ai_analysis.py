@@ -409,14 +409,35 @@ Do NOT cite §2.37 for townhouse in a commercial district — §2.37 is the SFA
 district section and governs townhouse only where it is permitted by right
 in SFA.
 
+CRITICAL — DO NOT OVER-APPLY THE STATE PREEMPTION:
+§2.52(A)(40) and the underlying state law apply ONLY to Dwelling, Multifamily
+and Dwelling, Apartment. They do NOT apply to Dwelling, Single-Family Attached
+(Townhouse).
+
+Under Tex. Loc. Gov't Code §218.001, "multifamily residential" requires three
+or more dwelling units on a site, and "mixed-use residential" requires
+residential to be at least 65% of the square footage of a mixed-use site. A
+fee-simple townhouse is one dwelling unit per platted lot and meets neither
+definition.
+
+NEVER write that townhouse is allowed "under state law," "per state
+preemption," or any equivalent. Townhouse is allowed in commercial districts
+under the Garland Development Code's own special standards. If you are unsure
+why a use is allowed, say it is allowed subject to special standards under
+§2.52 and stop there.
+
 GDC §2.52(A)(40) — MIXED-USE AND MULTIFAMILY RESIDENTIAL:
 Per Tex. Loc. Gov't Code Ch. 218 (state preemption), Mixed-use residential and
 Multifamily residential are allowed in NO, CO, NS, CR, LC, HC, UR, UB, and DT
 notwithstanding any other GDC provision, subject to:
-- Maximum density: 36 units per acre
+- Maximum density: the greater of 36 units per acre or the highest residential
+  density allowed anywhere in Garland (MF permits up to 80 du/acre)
 - Maximum height: the greater of base zoning height or 45 feet
 - Maximum setback: the lesser of base zoning setback or 25 feet
 - Parking: 1 space per dwelling unit (many developers provide more)
+- A multilevel parking structure may not be required
+- If the project meets applicable regulations, the permit must be approved
+  administratively — no Plan Commission or City Council action may be required
 - Not permitted within 1,000 ft of an existing heavy industrial use, within
   3,000 ft of an airport or military base, or in a designated clear zone or
   accident potential zone

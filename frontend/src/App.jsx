@@ -119,14 +119,9 @@ const styles = {
     textAlign: 'left',
   },
   heroDisclaimer: {
-    display: 'inline-block',
     fontSize: '12px',
-    color: '#555',
-    background: '#f5f5f5',
-    border: '1px solid #d0d0d0',
-    borderRadius: '3px',
-    padding: '8px 12px',
-    marginBottom: '28px',
+    color: '#94a3b8',
+    margin: '0 0 28px',
     textAlign: 'left',
   },
   valueGrid: {
@@ -564,16 +559,15 @@ const handlePrint = () => {
       <main style={styles.main} className="main-content">
         <section style={styles.landing} className="landing-section no-print">
           <h2 style={styles.heroHeadline}>
-            ZonePath answers the question every project starts with — is my use allowed here, and what will it take to get approved?
+            Know if your use is allowed before you sign the lease.
           </h2>
           <p style={styles.heroSubtext}>
             Enter an address and a proposed use. Get the zoning district, land use permissibility,
             parking requirements, and a pre-application analysis in about ten seconds.
           </p>
-          <div style={styles.heroDisclaimer}>
-            ZonePath is a research tool — it does not issue zoning determinations. Always verify
-            findings with Garland Planning &amp; Development before submitting permit applications.
-          </div>
+          <p style={styles.heroDisclaimer}>
+            A research tool, not a zoning determination — always verify with Garland Planning &amp; Development.
+          </p>
 
           <div style={styles.valueGrid} className="value-grid">
             <div style={styles.valueBlock}>
@@ -591,10 +585,10 @@ const handlePrint = () => {
               </p>
             </div>
             <div style={styles.valueBlock}>
-              <div style={styles.valueBlockTitle}>Built by a working planner</div>
+              <div style={styles.valueBlockTitle}>Built by a municipal planner</div>
               <p style={styles.valueBlockText}>
-                Created by a City of Garland Planner II who processes rezonings, SUPs, and Planned
-                Developments.
+                Created by a working planner who processes rezonings, Specific Use Provisions, and
+                Planned Developments — not a data vendor interpreting code from the outside.
               </p>
             </div>
           </div>
