@@ -18,7 +18,7 @@ Who it's for: small business owners scouting locations, commercial brokers and s
 
 Why this one is accurate
 
-I'm a Planner II with the City of Garland. I process rezonings, Specific Use Provisions, and Planned Developments, and I present cases to the Plan Commission and Board of Adjustment.
+I'm an experienced Urban Planner. I've processed rezonings, Specific Use Provisions, and Planned Developments, and I've presented cases to the Plan Commission, City Council, and Board of Adjustment.
 
 That matters here in concrete ways:
 
