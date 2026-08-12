@@ -15,11 +15,23 @@
     grid-template-columns: 1fr !important;
   }
 
+  .value-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .landing-section h2 {
+    font-size: 21px !important;
+  }
+
   .site-header {
     padding: 12px 16px !important;
     height: auto !important;
     min-height: 64px !important;
     flex-wrap: wrap !important;
+  }
+
+  .header-badges {
+    margin-left: 0 !important;
   }
 
   .district-big {

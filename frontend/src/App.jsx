@@ -56,17 +56,16 @@ const styles = {
   },
   headerTitle: {
     color: 'white',
-    fontSize: '18px',
+    fontSize: '20px',
     fontWeight: 'bold',
-    letterSpacing: '0.5px',
+    letterSpacing: '0.2px',
     margin: 0,
   },
   headerSub: {
-    color: ACCENT,
+    color: 'rgba(255,255,255,0.6)',
     fontSize: '12px',
-    letterSpacing: '1.5px',
-    textTransform: 'uppercase',
-    margin: 0,
+    letterSpacing: '0.2px',
+    margin: '2px 0 0',
   },
   badge: {
     background: ACCENT,
@@ -78,10 +77,109 @@ const styles = {
     borderRadius: '2px',
     textTransform: 'uppercase',
   },
+  coverageBadge: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '4px',
+    background: 'rgba(200,169,81,0.14)',
+    border: '1px solid rgba(200,169,81,0.5)',
+    color: ACCENT,
+    fontSize: '11px',
+    fontWeight: 'bold',
+    letterSpacing: '0.3px',
+    padding: '4px 10px',
+    borderRadius: '999px',
+    whiteSpace: 'nowrap',
+  },
   main: {
     maxWidth: '1600px',
     margin: '0 auto',
     padding: '32px 32px',
+  },
+  landing: {
+    marginBottom: '32px',
+    textAlign: 'left',
+  },
+  heroHeadline: {
+    fontSize: '26px',
+    fontWeight: 'bold',
+    color: NAVY,
+    fontFamily: 'Georgia, serif',
+    lineHeight: 1.3,
+    margin: '0 0 12px',
+    maxWidth: '780px',
+    textAlign: 'left',
+  },
+  heroSubtext: {
+    fontSize: '15px',
+    color: '#475569',
+    lineHeight: 1.6,
+    maxWidth: '680px',
+    margin: '0 0 14px',
+    textAlign: 'left',
+  },
+  heroDisclaimer: {
+    display: 'inline-block',
+    fontSize: '12px',
+    color: '#555',
+    background: '#f5f5f5',
+    border: '1px solid #d0d0d0',
+    borderRadius: '3px',
+    padding: '8px 12px',
+    marginBottom: '28px',
+    textAlign: 'left',
+  },
+  valueGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(3, 1fr)',
+    gap: '16px',
+    marginBottom: '24px',
+  },
+  valueBlock: {
+    background: 'white',
+    border: `1px solid ${BORDER}`,
+    borderTop: `3px solid ${ACCENT}`,
+    borderRadius: '4px',
+    padding: '18px',
+  },
+  valueBlockTitle: {
+    fontSize: '14px',
+    fontWeight: 'bold',
+    color: NAVY,
+    marginBottom: '6px',
+    textAlign: 'left',
+  },
+  valueBlockText: {
+    fontSize: '13px',
+    color: '#475569',
+    lineHeight: 1.55,
+    margin: 0,
+    textAlign: 'left',
+  },
+  audienceRow: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    gap: '8px',
+    marginBottom: '28px',
+    paddingBottom: '28px',
+    borderBottom: `1px solid ${BORDER}`,
+  },
+  audienceLabel: {
+    fontSize: '11px',
+    fontWeight: 'bold',
+    letterSpacing: '1px',
+    textTransform: 'uppercase',
+    color: '#94a3b8',
+    marginRight: '2px',
+  },
+  audienceTag: {
+    fontSize: '12px',
+    color: '#334155',
+    background: GRAY,
+    border: `1px solid ${BORDER}`,
+    borderRadius: '999px',
+    padding: '4px 12px',
   },
   searchCard: {
     background: 'white',
@@ -351,8 +449,8 @@ export default function App() {
 
   useEffect(() => {
     document.title = result?.normalized_address
-      ? `${result.normalized_address} — Garland Zoning Analysis`
-      : 'Garland Zoning Pre-Application Analysis'
+      ? `${result.normalized_address} — ZonePath`
+      : 'ZonePath — Garland, TX Zoning Analysis'
   }, [result])
 
   const BLOCKED_TERMS = [
@@ -454,13 +552,62 @@ const handlePrint = () => {
 `}</style>
       <header style={styles.header} className="site-header">
         <div>
-          <p style={styles.headerSub}>City of Garland, TX</p>
-          <h1 style={styles.headerTitle}>Zoning Pre-Application Analysis</h1>
+          <h1 style={styles.headerTitle}>ZonePath</h1>
+          <p style={styles.headerSub}>Zoning Pre-Application Analysis</p>
         </div>
-        <span style={{ marginLeft: 'auto', ...styles.badge }}>Beta</span>
+        <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '8px' }} className="header-badges">
+          <span style={styles.coverageBadge}>📍 Garland, TX</span>
+          <span style={styles.badge}>Beta</span>
+        </div>
       </header>
 
       <main style={styles.main} className="main-content">
+        <section style={styles.landing} className="landing-section no-print">
+          <h2 style={styles.heroHeadline}>
+            ZonePath answers the question every project starts with — is my use allowed here, and what will it take to get approved?
+          </h2>
+          <p style={styles.heroSubtext}>
+            Enter an address and a proposed use. Get the zoning district, land use permissibility,
+            parking requirements, and a pre-application analysis in about ten seconds.
+          </p>
+          <div style={styles.heroDisclaimer}>
+            ZonePath is a research tool — it does not issue zoning determinations. Always verify
+            findings with Garland Planning &amp; Development before submitting permit applications.
+          </div>
+
+          <div style={styles.valueGrid} className="value-grid">
+            <div style={styles.valueBlock}>
+              <div style={styles.valueBlockTitle}>Verified against the code</div>
+              <p style={styles.valueBlockText}>
+                115 uses across 22 zoning districts, transcribed and verified directly from the
+                Garland Development Code.
+              </p>
+            </div>
+            <div style={styles.valueBlock}>
+              <div style={styles.valueBlockTitle}>Written like a planner</div>
+              <p style={styles.valueBlockText}>
+                The analysis covers approval path, likely staff position, and red flags — not just
+                a list of data attributes.
+              </p>
+            </div>
+            <div style={styles.valueBlock}>
+              <div style={styles.valueBlockTitle}>Built by a working planner</div>
+              <p style={styles.valueBlockText}>
+                Created by a City of Garland Planner II who processes rezonings, SUPs, and Planned
+                Developments.
+              </p>
+            </div>
+          </div>
+
+          <div style={styles.audienceRow}>
+            <span style={styles.audienceLabel}>Built for</span>
+            <span style={styles.audienceTag}>Business owners scouting locations</span>
+            <span style={styles.audienceTag}>Commercial brokers &amp; site selectors</span>
+            <span style={styles.audienceTag}>Developers</span>
+            <span style={styles.audienceTag}>Multi-site due diligence firms</span>
+          </div>
+        </section>
+
         <div style={styles.searchCard} className="no-print">
           <div style={styles.inputRow} className="input-row">
             <div style={{ position: 'relative' }}>
