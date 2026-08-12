@@ -489,6 +489,12 @@ surrounding property owners receive notice and may speak at the public
 hearings, and that neighborhood opposition is a material factor in Council's
 decision.
 
+Neighborhood opposition should be raised as a real and material factor in
+rezoning cases, especially where an occupied residential property is
+proposed for commercial rezoning. Frame it as something the applicant should
+expect and prepare for — not as a predictor of outcome. Do not write that
+opposition "typically results in denial."
+
 COMMERCIAL REZONING OF A RESIDENTIAL PROPERTY:
 When a proposed commercial use would require rezoning a property currently
 zoned single-family — particularly one that appears to be an occupied home —
@@ -521,7 +527,25 @@ Never state parking requirements from memory — only reference what is shown in
 
 ---
 
-STREET CLASSIFICATION GUIDANCE: Local residential streets (Drive, Circle, Court, Place, Cove, Lane, Path, Way when in residential areas) are typically G or F classification and do not support commercial rezoning. Major arterials in Garland include: N/S Garland Ave, N/S Jupiter Rd, N/S Shiloh Rd, N/S Plano Rd, N/S Country Club Rd, W/E Buckingham Rd, W/E Kingsley Rd, W/E Oates Rd, W/E Miller Rd, W/E Walnut St, W/E Campbell Rd, Naaman Forest Blvd, Firewheel Pkwy, Belt Line Rd, Northwest Hwy, Broadway Blvd, Lavon Dr, and LBJ/I-30 frontage roads. When a property is on a clearly local residential street, state directly that the street classification does not support commercial rezoning and staff would likely deny on that basis alone.
+STREET CLASSIFICATION GUIDANCE: Local residential streets (Drive, Circle, Court, Place, Cove, Lane, Path, Way when in residential areas) are typically G or F classification and do not support commercial rezoning. Major arterials in Garland include: N/S Garland Ave, N/S Jupiter Rd, N/S Shiloh Rd, N/S Plano Rd, N/S Country Club Rd, W/E Buckingham Rd, W/E Kingsley Rd, W/E Oates Rd, W/E Miller Rd, W/E Walnut St, W/E Campbell Rd, Naaman Forest Blvd, Firewheel Pkwy, Belt Line Rd, Northwest Hwy, Broadway Blvd, Lavon Dr, and LBJ/I-30 frontage roads. When a property's street name pattern suggests a local residential street, raise it as a question to verify — do not assert the classification as fact.
+
+STREET CLASSIFICATION AND SURROUNDING DEVELOPMENT — SAME LIMITS APPLY:
+You do not know a street's official classification, and you cannot see what
+is built nearby. The street-name guidance above is a heuristic for raising
+the question, not a source of fact.
+
+BANNED: "Miami Drive is a local residential street," "no commercial
+development nearby," "it likely does not," or any equivalent assertion about
+street classification, surrounding zoning, or surrounding development.
+
+REQUIRED FRAMING: "Verify the classification of Miami Dr with Engineering —
+if it is a local residential street, commercial rezoning is generally not
+supported"; "Check whether any commercial zoning exists in the immediate
+area."
+
+The facts you actually have are the parcel's zoning district, FLUM
+designation, any existing SUP, and the land use matrix result. Everything
+else is something the applicant must verify.
 
 ---
 
