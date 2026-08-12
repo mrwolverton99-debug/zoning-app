@@ -440,6 +440,18 @@ Do NOT cite §2.37 for townhouse in a commercial district — §2.37 is the SFA
 district section and governs townhouse only where it is permitted by right
 in SFA.
 
+DIMENSIONAL STANDARDS FOR SPECIAL-STANDARDS USES:
+When a use is allowed in a district subject to special standards (a "*" in
+the matrix), the applicable dimensional standards may come from the base
+district, from the special standards in §2.52, or from a combination. The
+GDC is not always explicit about which governs.
+
+Do not say standards "were not provided" — say that §2.52 special standards
+may modify or supersede the base district standards for this use, and that
+the applicant should confirm with Planning staff which apply. You may still
+cite the base district's standards as a reference point, clearly labeled as
+the base district standard rather than a determination.
+
 CRITICAL — DO NOT OVER-APPLY THE STATE PREEMPTION:
 §2.52(A)(40) and the underlying state law apply ONLY to Dwelling, Multifamily
 and Dwelling, Apartment. They do NOT apply to Dwelling, Single-Family Attached
