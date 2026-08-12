@@ -617,8 +617,10 @@ Provide a complete pre-application analysis in the JSON format specified."""
                     {"role": "user", "content": user_message}
                 ]
             },
-            timeout=30
+            timeout=60
         )
+    except requests.exceptions.Timeout as e:
+        raise RuntimeError("The analysis timed out — please try again.") from e
     except requests.RequestException as e:
         raise RuntimeError(f"Anthropic API request failed: {e}") from e
 
