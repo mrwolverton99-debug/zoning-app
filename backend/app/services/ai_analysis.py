@@ -606,7 +606,13 @@ Provide a complete pre-application analysis in the JSON format specified."""
             json={
                 "model": MODEL,
                 "max_tokens": 2000,
-                "system": SYSTEM_PROMPT,
+                "system": [
+                    {
+                        "type": "text",
+                        "text": SYSTEM_PROMPT,
+                        "cache_control": {"type": "ephemeral", "ttl": "1h"}
+                    }
+                ],
                 "messages": [
                     {"role": "user", "content": user_message}
                 ]
@@ -628,6 +634,14 @@ Provide a complete pre-application analysis in the JSON format specified."""
         )
 
     data = response.json()
+
+    usage = data.get("usage", {})
+    print(
+        f"Anthropic usage — input_tokens={usage.get('input_tokens')} "
+        f"cache_creation_input_tokens={usage.get('cache_creation_input_tokens')} "
+        f"cache_read_input_tokens={usage.get('cache_read_input_tokens')} "
+        f"output_tokens={usage.get('output_tokens')}"
+    )
 
     try:
         text = data["content"][0]["text"]
